@@ -191,7 +191,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask.execute((Void) null);
             if(mAuthTask.doInBackground()) {
 
-                  startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference ref = database.getReference("users/userid");
+                DatabaseReference user = ref.push();
+                user.child("email").setValue(email);
+                user.child("password").setValue(password);
+
+                startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
 
             }
         }
