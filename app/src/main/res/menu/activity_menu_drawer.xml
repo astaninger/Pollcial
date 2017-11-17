@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person_black_24px"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_discover"
+            android:icon="@drawable/ic_whatshot_black_24px"
+            android:title="Discover" />
+        <item
+            android:id="@+id/nav_my_poll"
+            android:icon="@drawable/ic_poll_black_24px"
+            android:title="My Polls" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings_black_24px"
+            android:title="Setting" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_power_settings_new_black_24px"
+            android:title="Logout" />
+    </group>
+
+
+
+</menu>
