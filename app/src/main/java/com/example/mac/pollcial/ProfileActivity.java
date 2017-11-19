@@ -38,11 +38,30 @@ public class ProfileActivity extends AppCompatActivity {
         changePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                changeUsername();
+            }
+        });
+
+        EditText saveUsernameChange = (EditText) findViewById(R.id.btn_save_username_change);
+        saveUsernameChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 changePassword();
             }
         });
     }
 
+    private void changeUsername() {
+        Context context = getApplicationContext();
+        CharSequence text = "Hello toast!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    
     private void changePassword() {
         Context context = getApplicationContext();
         CharSequence text = "Hello toast!";
