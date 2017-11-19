@@ -10,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -31,6 +33,23 @@ public class ProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        Button changePasswordBtn = (Button) findViewById(R.id.btn_change_password);
+        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changePassword();
+            }
+        });
+    }
+
+    private void changePassword() {
+        Context context = getApplicationContext();
+        CharSequence text = "Hello toast!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
 
     }
 
