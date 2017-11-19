@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/52b10fd855e34a34f051ca868168be7509e56f8c/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_e6880171c5f5cc1c0bcce79313b0fbd19376ed00.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/9962c0830d34e8e5fcc1ad164aa5604c7a9a168a/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_c05206fcc9d6a3ecb29bc1a3a4ada2c003a9128d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/22fb502a7fbae06d102c179e9718a18a655f3ef8/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_efccfdf7d8e30e4a08d7458059c44e8bfc1efe59.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/33c968410422b1890076f491b9b186fca3d59a6d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_1d938d977ef61129378a1fedeff6a81b5634b9a6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/a5ed7bad3591514902e76a0bb64185d14b2a4785/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_8082088e9ea829fd5c4859c2c26c47929cd79c16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/56bc459e05058afcc10076421a84969e8f1d5187/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_60785a5a8f50ae69f7c6930d4979a4867318dd9e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/7014b285bf6d5e95345a2d714add5d530a483aa0/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_ed20b350baf870c076705b3caad733ebaf80206f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/5c08c31099fa02ea5ee785b487f21a9686f3e5fa/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_cea57185dfc7521614aebe3cf981e311b0f8f4ef.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/b25aa0a8f1abeaf7d0e6d3479e79068a9595b89c/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_566a3f3485a60cb89d845d3cfda009d06b02afcb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zongqichen/.android/build-cache/a84490367c282c667791ad207af1fcd00b027b6d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="/Users/zongqichen/Documents/CSE110/Pollcial/app/build/intermediates/pre-dexed/debug/classes_9459688585a253f1302ff35860975f54acda7dd7.jar" />
+    </item>
+
+</items>

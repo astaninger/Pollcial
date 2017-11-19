@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "691115877219",
+    "firebase_url": "https://pollcial-app.firebaseio.com",
+    "project_id": "pollcial-app",
+    "storage_bucket": "pollcial-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691115877219:android:b453b0e6e55d8db7",
+        "android_client_info": {
+          "package_name": "com.example.mac.pollcial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "691115877219-qc31cn6rvcn68up2r96c9f2frniar97g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mac.pollcial",
+            "certificate_hash": "3e8190a4973c0f4d300e10242137d8ad947a8a84"
+          }
+        },
+        {
+          "client_id": "691115877219-d1dln25tc5je1u4r32cgamlj7c6ftba3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mac.pollcial",
+            "certificate_hash": "3673aba5ec47925ad0abbbeca1708421ca9cc2fd"
+          }
+        },
+        {
+          "client_id": "691115877219-49pq1l8m88o00bfl9jk47egm3nndli7e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCygXqfBRHt8hsLu-x0wE-55wn2FuQAyfc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "691115877219-49pq1l8m88o00bfl9jk47egm3nndli7e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
