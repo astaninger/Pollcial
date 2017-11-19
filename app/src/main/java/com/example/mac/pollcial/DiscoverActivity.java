@@ -94,6 +94,9 @@ public class DiscoverActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_setting) {
 
+            //render setting activity
+            startActivity(new Intent(DiscoverActivity.this, SettingsActivity.class));
+
         } else if (id == R.id.nav_logout) {
 
         }
