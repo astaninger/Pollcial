@@ -8,4 +8,9 @@
     tools:context="com.example.mac.pollcial.DiscoverActivity"
     tools:showIn="@layout/app_bar_discover">
 
+    <Button
+        android:id="@+id/btn_single_poll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Single Poll" />
 </android.support.constraint.ConstraintLayout>
