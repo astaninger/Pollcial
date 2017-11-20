@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private EditText btnForgetPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+
+        btnForgetPassword = (EditText)findViewById(R.id.btn_forgot_password);
+        btnForgetPassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
             }
         });
 
@@ -240,7 +251,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             // ...
                         }
                     });
-                //if signin successful, render discovery page
+
+            //if signin successful, render discovery page
             startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
         }
 

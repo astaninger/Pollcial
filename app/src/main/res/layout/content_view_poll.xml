@@ -23,43 +23,64 @@
                 android:id="@+id/txt_Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:text="Title" />
+                android:text="Title"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:text="Poll Description" />
+                android:text="Poll Description \n This is a poll."
+                android:textSize="16sp" />
 
-            <RadioButton
-                android:id="@+id/rdb_choice_a"
+            <RadioGroup
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Choice A" />
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginVertical="@dimen/activity_vertical_margin"
+                android:layout_weight="1">
 
-            <RadioButton
-                android:id="@+id/rdb_choice_b"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Choice B" />
+                <RadioButton
+                    android:id="@+id/rdb_choice_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Choice A"
+                    android:textSize="18sp" />
 
-            <RadioButton
-                android:id="@+id/rdb_choice_c"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Choice C" />
+                <RadioButton
+                    android:id="@+id/rdb_choice_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Choice B"
+                    android:textSize="18sp" />
 
-            <RadioButton
-                android:id="@+id/rdb_choice_d"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Choice D" />
+                <RadioButton
+                    android:id="@+id/rdb_choice_c"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Choice C"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/rdb_choice_d"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Choice D"
+                    android:textSize="18sp" />
+
+            </RadioGroup>
+
         </LinearLayout>
     </ScrollView>
 
@@ -70,19 +91,31 @@
         android:layout_alignParentStart="true"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txt_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="Enter your comment" />
+            android:background="@android:drawable/editbox_background_normal"
+            android:focusable="true" android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/txt_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Enter your comment (optional)" />
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btn_vote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="VOTE!" />
+            android:background="@color/colorAccent"
+            android:text="VOTE!"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 </RelativeLayout>
