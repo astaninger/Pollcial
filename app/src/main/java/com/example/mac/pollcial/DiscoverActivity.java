@@ -58,6 +58,14 @@ public class DiscoverActivity extends AppCompatActivity
                 startActivity(new Intent(DiscoverActivity.this, ViewPollActivity.class));
             }
         });
+
+        LinearLayout bViewPoll2 = (LinearLayout) findViewById(R.id.btn_view_poll2);
+        bViewPoll2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DiscoverActivity.this, TempViewPollActivity.class));
+            }
+        });
     }
 
     @Override

@@ -34,6 +34,17 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         emailEditText = (EditText) findViewById(R.id.txt_email);
 
+        //this block adds a back button to the upper left of screen
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         Button btnSubmitResetRequest = (Button) findViewById(R.id.submit_reset_request);
         btnSubmitResetRequest.setOnClickListener(new View.OnClickListener() {
             @Override

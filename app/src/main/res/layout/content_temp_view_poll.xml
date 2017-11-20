@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.mac.pollcial.ViewPollActivity"
-    tools:showIn="@layout/activity_view_poll">
+    tools:context="com.example.mac.pollcial.TempViewPollActivity"
+    tools:showIn="@layout/activity_temp_view_poll">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:text="What to eat tonight?"
+                android:text="How about movies"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -38,7 +38,7 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="1 hr ago by Gary" />
+                android:text="2 hr ago by JERRY" />
 
             <TextView
                 android:id="@+id/txt_description"
@@ -47,7 +47,7 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:text="Around UCSD \n Comment with some names of restaurants \n No spicy please."
+                android:text="As title"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Ramen"
+                    android:text="Spiderman"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Chinese Food"
+                    android:text="Batman"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -79,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Mexican Food"
+                    android:text="Superman"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Price Center"
+                    android:text="Ironman"
                     android:textSize="18sp" />
 
             </RadioGroup>
@@ -116,17 +116,36 @@
                 android:backgroundTint="@color/colorAccent"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:hint="Enter your comment (optional)" />
+                android:hint="Enter your result" />
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_vote"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:text="VOTE!"
-            android:textColor="#ffffff" />
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_Edit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:text="Edit"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/btn_vote"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:text="Update Result"
+                android:textColor="#ffffff" />
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

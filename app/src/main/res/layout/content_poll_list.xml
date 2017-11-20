@@ -45,10 +45,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/btn_view_poll2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:drawable/editbox_background_normal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clickable="true">
 
         <TextView
             android:id="@+id/txt_title2"
