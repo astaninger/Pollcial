@@ -48,7 +48,11 @@
             android:label="Sign up" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".ViewPollActivity"
+            android:label="Poll"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

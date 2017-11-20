@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.mac.pollcial.SinglePollActivity"
-    tools:showIn="@layout/activity_single_poll"
-    android:orientation="vertical">
+    tools:context="com.example.mac.pollcial.ViewPollActivity"
+    tools:showIn="@layout/activity_view_poll">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -68,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:orientation="vertical">
 
         <TextView
@@ -85,5 +85,4 @@
             android:text="VOTE!" />
 
     </LinearLayout>
-
 </RelativeLayout>
