@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-
+        // forgot password
         btnForgetPassword = (EditText)findViewById(R.id.btn_forgot_password);
         btnForgetPassword.setOnClickListener(new OnClickListener() {
             @Override
@@ -122,15 +122,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-
-        // Forgot Password
-        EditText mForgotPasswordButton = (EditText) findViewById(R.id.btn_forgot_password);
-        mForgotPasswordButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // goto resetemail page
-            }
-        });
 
         // Forgot Password
         EditText mGuestAccountButton = (EditText) findViewById(R.id.btn_guest_account);
