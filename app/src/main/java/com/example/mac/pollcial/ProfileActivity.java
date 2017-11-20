@@ -61,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
         toast.show();
     }
 
-    
+
     private void changePassword() {
         Context context = getApplicationContext();
         CharSequence text = "Hello toast!";
