@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.support.v7.widget.SearchView;
+import android.widget.LinearLayout;
 
 
 public class DiscoverActivity extends AppCompatActivity
@@ -50,8 +51,8 @@ public class DiscoverActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Button bSinglePoll = (Button) findViewById(R.id.btn_single_poll);
-        bSinglePoll.setOnClickListener(new View.OnClickListener() {
+        LinearLayout bViewPoll = (LinearLayout) findViewById(R.id.btn_view_poll);
+        bViewPoll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DiscoverActivity.this, ViewPollActivity.class));

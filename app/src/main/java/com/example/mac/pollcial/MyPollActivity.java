@@ -1,5 +1,6 @@
 package com.example.mac.pollcial;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.support.v7.widget.SearchView;
+import android.widget.LinearLayout;
 
 public class MyPollActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,8 +50,8 @@ public class MyPollActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Button bSinglePoll = (Button) findViewById(R.id.btn_single_poll);
-        bSinglePoll.setOnClickListener(new View.OnClickListener() {
+        LinearLayout bViewPoll = (LinearLayout) findViewById(R.id.btn_view_poll);
+        bViewPoll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MyPollActivity.this, ViewPollActivity.class));

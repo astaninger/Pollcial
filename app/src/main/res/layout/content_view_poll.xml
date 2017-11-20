@@ -26,9 +26,19 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:text="Title"
+                android:text="What to eat tonight?"
+                android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_time_n_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="1 hr ago by JERRY" />
 
             <TextView
                 android:id="@+id/txt_description"
@@ -37,8 +47,9 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:text="Poll Description \n This is a poll."
-                android:textSize="16sp" />
+                android:text="Around UCSD \n Comment with some names of restaurants \n No spicy please."
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -52,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Choice A"
+                    android:text="Ramen"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -60,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Choice B"
+                    android:text="Chinese Food"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -68,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Choice C"
+                    android:text="Mexican Food"
                     android:textSize="18sp" />
 
                 <RadioButton
@@ -76,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Choice D"
+                    android:text="Price Center"
                     android:textSize="18sp" />
 
             </RadioGroup>
