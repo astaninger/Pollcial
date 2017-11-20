@@ -141,7 +141,7 @@ public class DiscoverActivity extends AppCompatActivity
             startActivity(new Intent(DiscoverActivity.this, SettingsActivity.class));
 
         } else if (id == R.id.nav_logout) {
-
+            startActivity(new Intent(DiscoverActivity.this, LoginActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
