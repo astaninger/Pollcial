@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -50,36 +51,57 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // send email
-                FirebaseAuth auth = FirebaseAuth.getInstance();
+                String email = emailEditText.getText().toString();
 
-                auth.sendPasswordResetEmail(emailEditText.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("sendResetEmail", "Email sent.");
+                // check empty email
+                if(TextUtils.isEmpty(email)) {
+                    emailEditText.setError(getString(R.string.error_field_required));
+
+                    // display message
+                    Context context = getApplicationContext();
+                    CharSequence noEmailInfo = "No email provided.";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast displayError = Toast.makeText(context, noEmailInfo, duration);
+                    displayError.show();
+
+                    View focusView = emailEditText;
+                    focusView.requestFocus();
+                }
+                else {
+                    // send email
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+
+                    // try to send password reset email
+                    auth.sendPasswordResetEmail(email)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    // prepare toast
                                     Context context = getApplicationContext();
-                                    CharSequence successInfo = "An email containing password reset instruction has been sent to your email address.";
                                     int duration = Toast.LENGTH_SHORT;
 
-                                    Toast displaySuccess = Toast.makeText(context, successInfo, duration);
-                                    displaySuccess.show();
+                                    // success
+                                    if (task.isSuccessful()) {
+                                        Log.d("sendResetEmail", "Email sent.");
+                                        CharSequence successInfo = "An email containing password reset instruction has been sent to your email address.";
 
-                                    startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
+                                        Toast displaySuccess = Toast.makeText(context, successInfo, duration);
+                                        displaySuccess.show();
+
+                                        // go back to login page
+                                        startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
+                                    } else {
+                                        Log.e("sendResetEmail", "Email not found");
+
+                                        CharSequence failInfo = "The email could not be found.";
+
+                                        Toast displayFail = Toast.makeText(context, failInfo, duration);
+                                        displayFail.show();
+                                    }
                                 }
-                                else {
-                                    Log.e("sendResetEmail", "Email not found");
-                                    Context context = getApplicationContext();
-
-                                    CharSequence failInfo = "The email could not be found.";
-                                    int duration = Toast.LENGTH_SHORT;
-
-                                    Toast displayFail = Toast.makeText(context, failInfo, duration);
-                                    displayFail.show();
-                                }
-                            }
-                        });
+                            });
+                }
             }
         });
     }
