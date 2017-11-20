@@ -56,6 +56,10 @@
         <activity
             android:name=".ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MyPollActivity"
+            android:label="@string/title_activity_my_poll"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

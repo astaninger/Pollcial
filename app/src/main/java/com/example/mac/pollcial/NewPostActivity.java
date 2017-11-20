@@ -77,7 +77,7 @@ public class NewPostActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflate the menu; this adds items to the action bar if it is present.
+        //Inflate the menu_discover; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_new_post, menu);
         MenuItem submitPoll = menu.findItem(R.id.action_post_poll);
         submitPoll.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

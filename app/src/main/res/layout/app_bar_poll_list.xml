@@ -21,10 +21,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_discover" />
+    <include layout="@layout/content_poll_list" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabNewPost"
+        android:id="@+id/fab_new_post"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="bottom|end"

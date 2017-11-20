@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
-public class DiscoverActivity extends AppCompatActivity
+public class MyPollActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -23,18 +23,17 @@ public class DiscoverActivity extends AppCompatActivity
         setContentView(R.layout.activity_poll_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Discover");
-
+        toolbar.setTitle("My Polls");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        //.setAction("Action", null).show();
+                //.setAction("Action", null).show();
 
                 //when click the fab render newpost activity
-                startActivity(new Intent(DiscoverActivity.this, NewPostActivity.class));
+                startActivity(new Intent(MyPollActivity.this, NewPostActivity.class));
             }
         });
 
@@ -51,7 +50,7 @@ public class DiscoverActivity extends AppCompatActivity
         bSinglePoll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DiscoverActivity.this, ViewPollActivity.class));
+                startActivity(new Intent(MyPollActivity.this, ViewPollActivity.class));
             }
         });
     }
@@ -97,20 +96,20 @@ public class DiscoverActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {
 
             //render profile activity
-            startActivity(new Intent(DiscoverActivity.this, ProfileActivity.class));
+            startActivity(new Intent(MyPollActivity.this, ProfileActivity.class));
         } else if (id == R.id.nav_discover) {
 
-            //do nothing
+            //render discover activity
+            startActivity(new Intent(MyPollActivity.this, DiscoverActivity.class));
 
         } else if (id == R.id.nav_my_poll) {
 
-            //render my poll activity
-            startActivity(new Intent(DiscoverActivity.this, MyPollActivity.class));
+            //do nothing
 
         } else if (id == R.id.nav_setting) {
 
             //render setting activity
-            startActivity(new Intent(DiscoverActivity.this, SettingsActivity.class));
+            startActivity(new Intent(MyPollActivity.this, SettingsActivity.class));
 
         } else if (id == R.id.nav_logout) {
 
