@@ -52,7 +52,7 @@ public class DiscoverActivity extends AppCompatActivity
         bSinglePoll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DiscoverActivity.this, ViewSinglePollActivity.class));
+                startActivity(new Intent(DiscoverActivity.this, ViewPollActivity.class));
             }
         });
     }
