@@ -1,7 +1,6 @@
 package com.example.mac.pollcial;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +12,18 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static com.example.mac.pollcial.R.id.action_post_poll;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
 
 public class NewPostActivity extends AppCompatActivity {
 
+    private SinglePoll poll;
     private Button btnCancel;
+
+    // Firebase instance variables
+    private DatabaseReference mFirebaseDatabaseReference;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,8 @@ public class NewPostActivity extends AppCompatActivity {
             }
         });
 
-
+        // Initialize Firebase Database
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
 
         //TODO: switch
@@ -52,6 +59,12 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private boolean publishPoll() {
+        DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls").push();
+        mPollReference.setValue(poll);
+        // String pollId = mPollReference.getKey();
+        // DatabaseReference mUserReference = mFirebaseDatabaseReference.child("users").child(user.getUid());
+        // mUserReference.child("messages").child(pollId).setValue("true");
+
         Context context = getApplicationContext();
         CharSequence text = "POLL PUBLISHED!";
         int duration = Toast.LENGTH_SHORT;
@@ -82,8 +95,15 @@ public class NewPostActivity extends AppCompatActivity {
 
 
                 //poll object. Not sure how to get username, useremail, time, and pollID.
+                // TODO: add Firebase authentication to this file so we can get user
+                /* user = FirebaseAuth.getInstance().getCurrentUser();
+                 * String uid = user.getUid();
+                 * String username = user.geDisplayName();
+                 * String email = user.getEmail();
+                 */
+                // TODO: change SinglePoll - remove pollId field, add Uid field
                 //need to pass poll object to firebase.
-                SinglePoll poll = new SinglePoll(0, pollTitle.getText().toString(), pollDescription.getText().toString()
+                poll = new SinglePoll(0, pollTitle.getText().toString(), pollDescription.getText().toString()
                         , pollChoiceA.getText().toString(), pollChoiceB.getText().toString(), pollChoiceC.getText().toString(),
                         pollChoiceD.getText().toString(), "FAKETIME", "FAKEUSERNAME", "FAKEEMAIL", anon.isChecked());
 

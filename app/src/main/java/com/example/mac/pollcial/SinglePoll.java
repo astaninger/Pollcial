@@ -20,6 +20,7 @@ public class SinglePoll {
     public SinglePoll(long pollId, String pollTitle, String pollDecription, String pollChoiceA,
                       String pollChoiceB, String pollChoiceC, String pollChoiceD,
                       String pollPostTime, String userName, String userEmail, boolean anonymous) {
+        // TODO: remove pollId field, add Uid field
         this.pollId = pollId;
         this.pollTitle = pollTitle;
         this.pollDecription = pollDecription;
