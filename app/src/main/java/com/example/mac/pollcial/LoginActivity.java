@@ -85,9 +85,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //Initialize FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
-
-
-
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -114,6 +111,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        // Forgot Password
+        EditText mForgotPasswordButton = (EditText) findViewById(R.id.btn_forgot_password);
+        mForgotPasswordButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // goto resetemail page
+            }
+        });
+
+        // Forgot Password
+        EditText mGuestAccountButton = (EditText) findViewById(R.id.btn_guest_account);
+        mGuestAccountButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                useGuestAccount();
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -230,6 +245,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
 
+    }
+
+    // Use guest account
+    private void useGuestAccount() {
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("guestAccount", "signInAnonymously:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("guestAccount", "signInAnonymously:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        //if signin successful, render discovery page
+        startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
     }
 
     private boolean isEmailValid(String email) {
