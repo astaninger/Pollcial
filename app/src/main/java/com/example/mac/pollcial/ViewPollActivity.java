@@ -8,12 +8,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ViewPollActivity extends AppCompatActivity {
 
@@ -34,6 +38,37 @@ public class ViewPollActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        Intent trigerIntent = getIntent(); // get the last Intent that triger this current Intent
+        // get all needed information about poll from trigerIntent
+        String currTitle = trigerIntent.getStringExtra("currTitle");
+        String currPostTimeAndAuthor = trigerIntent.getStringExtra("currPostTimeAndAuthor");
+        String currNumVotes = trigerIntent.getStringExtra("currNumVotes");
+        String currDescription = trigerIntent.getStringExtra("currDescription");
+        String currChoiceA = trigerIntent.getStringExtra("currChoiceA");
+        String currChoiceB = trigerIntent.getStringExtra("currChoiceB");
+        String currChoiceC = trigerIntent.getStringExtra("currChoiceC");
+        String currChoiceD = trigerIntent.getStringExtra("currChoiceD");
+
+        View currView = this.findViewById(android.R.id.content);
+
+        TextView title = (TextView)currView.findViewById(R.id.txt_Title);
+        TextView time_n_author = (TextView)currView.findViewById(R.id.txt_time_n_author);
+        TextView numVote = (TextView)currView.findViewById(R.id.num_votes);
+        TextView description = (TextView)currView.findViewById(R.id.txt_description);
+        TextView choiceA = (TextView)currView.findViewById(R.id.rdb_choice_a);
+        TextView choiceB = (TextView)currView.findViewById(R.id.rdb_choice_b);
+        TextView choiceC = (TextView)currView.findViewById(R.id.rdb_choice_c);
+        TextView choiceD = (TextView)currView.findViewById(R.id.rdb_choice_d);
+
+        title.setText(currTitle);
+        time_n_author.setText(currPostTimeAndAuthor);
+        numVote.setText(currNumVotes);
+        description.setText(currDescription);
+        choiceA.setText(currChoiceA);
+        choiceB.setText(currChoiceB);
+        choiceC.setText(currChoiceC);
+        choiceD.setText(currChoiceD);
 
     }
 

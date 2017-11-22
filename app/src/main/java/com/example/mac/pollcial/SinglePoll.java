@@ -4,7 +4,7 @@ package com.example.mac.pollcial;
  * Created by mac on 17/11/16.
  */
 
-public class SinglePoll {
+public class SinglePoll{
     private long pollId; // poll's ID
     private String pollTitle; // poll's title
     private String pollDecription; // poll's description

@@ -2,6 +2,7 @@ package com.example.mac.pollcial;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.view.View;
@@ -13,11 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.support.v7.widget.SearchView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -38,9 +41,6 @@ public class DiscoverActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        //.setAction("Action", null).show();
-
                 //when click the fab render newpost activity
                 startActivity(new Intent(DiscoverActivity.this, NewPostActivity.class));
             }
@@ -55,10 +55,16 @@ public class DiscoverActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
-        ArrayList<SinglePoll> allPolls = new ArrayList<>();
 
-        /* Test */
+
+
+         /******************** Test **********************/
+        /* TODO: The following lines between these 2 "Test" tags are hardcodings to test the Discover page layout.
+         *  Currently, the layout works. The controller groups should implement a function that can retrieve data of polls and use
+         *   that info to create SinglePoll objects. All SinglePoll objects should be put inside the ArrayList
+         *   called "allPolls", which is already created below.
+         */
+
         long pollId = 123;
         String pollTitle = "Test Poll #1";
         String pollDecription = "Test Poll #1's Description.";
@@ -75,12 +81,64 @@ public class DiscoverActivity extends AppCompatActivity
         SinglePoll test_poll_1 = new SinglePoll(pollId, pollTitle, pollDecription, pollChoiceA, pollChoiceB,
                             pollChoiceC, pollChoiceD, pollPostTime, userName, userEmail, anonymous, numVote);
 
+        long pollId2 = 456;
+        String pollTitle2 = "Test Poll #2";
+        String pollDecription2 = "Test Poll #2's Description.";
+        String pollChoiceA2 = "Test Poll #2 choice A";
+        String pollChoiceB2 = "Test Poll #2 choice B";
+        String pollChoiceC2 = "Test Poll #2 choice C";
+        String pollChoiceD2 = "Test Poll #2 choice D";
+        String pollPostTime2 = "One days ago";
+        String userName2 = "User_Admin_2";
+        String userEmail2 = "Admin_2@pollcial.com";
+        boolean anonymous2 = false;
+        int numVote2 = 300;
+
+        SinglePoll test_poll_2 = new SinglePoll(pollId2, pollTitle2, pollDecription2, pollChoiceA2, pollChoiceB2,
+                pollChoiceC2, pollChoiceD2, pollPostTime2, userName2, userEmail2, anonymous2, numVote2);
+
+        /********************* Test ************************/
+
+
+
+
+
+        ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
+        final ArrayList<SinglePoll> allPolls = new ArrayList<>();
+
+        /* TODO: replace these two lines, store all SinglePoll objects inside "allPolls" */
         allPolls.add(test_poll_1);
-
-        /*ArrayAdapter<SinglePoll> allPollsArrayAdapter = new ArrayAdapter<SinglePoll>(DiscoverActivity.this,
-                andriod.); */
+        allPolls.add(test_poll_2);
 
 
+
+        PollsAdapter allPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
+
+        // connect ListView with the adapter
+        allPollsListView.setAdapter(allPollsAdapter);
+
+        allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent viewPollIntent = new Intent(DiscoverActivity.this, ViewPollActivity.class);
+
+                SinglePoll currPoll = allPolls.get(position);
+                String timeAndAuthor = currPoll.getPollPostTime() + " by " + currPoll.getUserName();
+                // pass all info about current poll
+                viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
+                viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
+                viewPollIntent.putExtra("currNumVotes", currPoll.getNumVote());
+                viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
+                viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
+                viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
+                viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
+                viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
+
+                startActivity(viewPollIntent);
+
+            }
+        });
     }
 
     @Override
