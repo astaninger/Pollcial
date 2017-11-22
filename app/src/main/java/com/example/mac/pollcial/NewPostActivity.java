@@ -105,7 +105,7 @@ public class NewPostActivity extends AppCompatActivity {
                 //need to pass poll object to firebase.
                 poll = new SinglePoll(0, pollTitle.getText().toString(), pollDescription.getText().toString()
                         , pollChoiceA.getText().toString(), pollChoiceB.getText().toString(), pollChoiceC.getText().toString(),
-                        pollChoiceD.getText().toString(), "FAKETIME", "FAKEUSERNAME", "FAKEEMAIL", anon.isChecked(), numVote);
+                        pollChoiceD.getText().toString(), "FAKETIME", "FAKEUSERNAME", "FAKEEMAIL", anon.isChecked(), 0);
 
 
 

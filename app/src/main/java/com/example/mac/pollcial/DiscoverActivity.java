@@ -13,9 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.support.v7.widget.SearchView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 public class DiscoverActivity extends AppCompatActivity
@@ -51,22 +55,30 @@ public class DiscoverActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        LinearLayout bViewPoll = (LinearLayout) findViewById(R.id.btn_view_poll);
-        bViewPoll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DiscoverActivity.this, ViewPollActivity.class));
-            }
-        });
+        ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
+        ArrayList<SinglePoll> allPolls = new ArrayList<>();
 
-        LinearLayout bViewPoll2 = (LinearLayout) findViewById(R.id.btn_view_poll2);
-        bViewPoll2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DiscoverActivity.this, TempViewPollActivity.class));
-            }
-        });
+        /* Test */
+        long pollId = 123;
+        String pollTitle = "Test Poll #1";
+        String pollDecription = "Test Poll #1's Description.";
+        String pollChoiceA = "Test Poll #1 choice A";
+        String pollChoiceB = "Test Poll #1 choice B";
+        String pollChoiceC = "Test Poll #1 choice C";
+        String pollChoiceD = "Test Poll #1 choice D";
+        String pollPostTime = "Just Now";
+        String userName = "User_Admin";
+        String userEmail = "Admin@pollcial.com";
+        boolean anonymous = false;
+        int numVote = 12;
 
+        SinglePoll test_poll_1 = new SinglePoll(pollId, pollTitle, pollDecription, pollChoiceA, pollChoiceB,
+                            pollChoiceC, pollChoiceD, pollPostTime, userName, userEmail, anonymous, numVote);
+
+        allPolls.add(test_poll_1);
+
+        /*ArrayAdapter<SinglePoll> allPollsArrayAdapter = new ArrayAdapter<SinglePoll>(DiscoverActivity.this,
+                andriod.); */
 
 
     }

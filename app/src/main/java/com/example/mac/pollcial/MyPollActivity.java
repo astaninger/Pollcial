@@ -49,7 +49,7 @@ public class MyPollActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+ /*
         LinearLayout bViewPoll = (LinearLayout) findViewById(R.id.btn_view_poll);
         bViewPoll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +65,7 @@ public class MyPollActivity extends AppCompatActivity
                 startActivity(new Intent(MyPollActivity.this, TempViewPollActivity.class));
             }
         });
+        */
     }
 
     @Override
