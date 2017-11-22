@@ -88,7 +88,7 @@ public class DiscoverActivity extends AppCompatActivity
         String pollChoiceB2 = "Test Poll #2 choice B";
         String pollChoiceC2 = "Test Poll #2 choice C";
         String pollChoiceD2 = "Test Poll #2 choice D";
-        String pollPostTime2 = "One days ago";
+        String pollPostTime2 = "Yesterday";
         String userName2 = "User_Admin_2";
         String userEmail2 = "Admin_2@pollcial.com";
         boolean anonymous2 = false;

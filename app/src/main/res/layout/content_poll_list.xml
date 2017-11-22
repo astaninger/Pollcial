@@ -12,5 +12,7 @@
     <ListView
         android:id="@+id/polls_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="#80000000"
+        />
 </LinearLayout>
