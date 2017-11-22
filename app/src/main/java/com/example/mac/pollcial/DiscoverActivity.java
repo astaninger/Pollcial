@@ -66,6 +66,9 @@ public class DiscoverActivity extends AppCompatActivity
                 startActivity(new Intent(DiscoverActivity.this, TempViewPollActivity.class));
             }
         });
+
+
+
     }
 
     @Override

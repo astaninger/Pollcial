@@ -16,10 +16,11 @@ public class SinglePoll {
     private String userName; // user name, not user account
     private String userEmail; // user email address
     private boolean anonymous; // if true, do not display userName on screen
+    private int numVote; // the number of votes that have been submitted
 
     public SinglePoll(long pollId, String pollTitle, String pollDecription, String pollChoiceA,
                       String pollChoiceB, String pollChoiceC, String pollChoiceD,
-                      String pollPostTime, String userName, String userEmail, boolean anonymous) {
+                      String pollPostTime, String userName, String userEmail, boolean anonymous, int numVote) {
         // TODO: remove pollId field, add Uid field
         this.pollId = pollId;
         this.pollTitle = pollTitle;
@@ -32,6 +33,7 @@ public class SinglePoll {
         this.userName = userName;
         this.userEmail = userEmail;
         this.anonymous = anonymous;
+        this.numVote = numVote;
     }
 
     public long getPollId() {
@@ -74,6 +76,10 @@ public class SinglePoll {
         return userEmail;
     }
 
+    public int getNumVote() {
+        return numVote;
+    }
+
     public boolean isAnonymous() {
         return anonymous;
     }
@@ -112,6 +118,11 @@ public class SinglePoll {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+
+    public void setNumVote(int numVote) {
+        this.numVote = numVote;
     }
 
     public void setUserEmail(String userEmail) {
