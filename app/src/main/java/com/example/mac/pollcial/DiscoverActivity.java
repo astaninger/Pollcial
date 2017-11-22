@@ -128,7 +128,7 @@ public class DiscoverActivity extends AppCompatActivity
                 // pass all info about current poll
                 viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
                 viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
-                viewPollIntent.putExtra("currNumVotes", currPoll.getNumVote());
+                viewPollIntent.putExtra("currNumVotes", Integer.toString(currPoll.getNumVote()));
                 viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
                 viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
                 viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());

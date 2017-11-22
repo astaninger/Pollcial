@@ -64,7 +64,7 @@ public class ViewPollActivity extends AppCompatActivity {
 
         title.setText(currTitle);
         time_n_author.setText(currPostTimeAndAuthor);
-        numVote.setText(currNumVotes);
+        numVote.setText("Votes made: " + currNumVotes);
         description.setText(currDescription);
         choiceA.setText(currChoiceA);
         choiceB.setText(currChoiceB);
