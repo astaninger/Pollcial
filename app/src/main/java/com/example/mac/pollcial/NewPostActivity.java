@@ -63,9 +63,9 @@ public class NewPostActivity extends AppCompatActivity {
     private boolean publishPoll() {
         DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls").push();
         mPollReference.setValue(poll);
-        // String pollId = mPollReference.getKey();
-        // DatabaseReference mUserReference = mFirebaseDatabaseReference.child("users").child(user.getUid());
-        // mUserReference.child("messages").child(pollId).setValue("true");
+        String pollId = mPollReference.getKey();
+        DatabaseReference mUserReference = mFirebaseDatabaseReference.child("users").child(user.getUid());
+        mUserReference.child("polls").child(pollId).setValue("true");
 
         Context context = getApplicationContext();
         CharSequence text = "POLL PUBLISHED!";
