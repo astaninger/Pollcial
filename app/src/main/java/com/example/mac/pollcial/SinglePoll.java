@@ -18,6 +18,22 @@ public class SinglePoll{
     private int numVote; // the number of votes that have been submitted
     private String uid;
 
+
+    public SinglePoll() {
+        this.pollTitle = null;
+        this.pollDecription = null;
+        this.pollChoiceA = null;
+        this.pollChoiceB = null;
+        this.pollChoiceC = null;
+        this.pollChoiceD = null;
+        this.pollPostTime = null;
+        this.userName = null;
+        this.userEmail = null;
+        this.anonymous = false;
+        this.numVote = 0;
+        this.uid = null;
+    }
+
     public SinglePoll(String pollTitle, String pollDecription, String pollChoiceA,
                       String pollChoiceB, String pollChoiceC, String pollChoiceD,
                       String pollPostTime, String uid, String userName, String userEmail, boolean anonymous, int numVote) {

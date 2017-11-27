@@ -1,5 +1,6 @@
 package com.example.mac.pollcial;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -21,18 +22,28 @@ import android.support.v7.widget.SearchView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class DiscoverActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    ArrayList<SinglePoll> allPolls = new ArrayList<>();
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private DatabaseReference mFirebaseDatabaseReference;
+    PollsAdapter mPollsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,66 +75,41 @@ public class DiscoverActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-
-         /******************** Test **********************/
-        /* TODO: The following lines between these 2 "Test" tags are hardcodings to test the Discover page layout.
-         *  Currently, the layout works. The controller groups should implement a function that can retrieve data of polls and use
-         *   that info to create SinglePoll objects. All SinglePoll objects should be put inside the ArrayList
-         *   called "allPolls", which is already created below.
-         */
-
-        long pollId = 123;
-        String pollTitle = "Test Poll #1";
-        String pollDecription = "Test Poll #1's Description.";
-        String pollChoiceA = "Test Poll #1 choice A";
-        String pollChoiceB = "Test Poll #1 choice B";
-        String pollChoiceC = "Test Poll #1 choice C";
-        String pollChoiceD = "Test Poll #1 choice D";
-        String pollPostTime = "Just Now";
-        String userName = "User_Admin";
-        String userEmail = "Admin@pollcial.com";
-        boolean anonymous = false;
-        int numVote = 12;
-
-        SinglePoll test_poll_1 = new SinglePoll(pollTitle, pollDecription, pollChoiceA, pollChoiceB,
-                            pollChoiceC, pollChoiceD, pollPostTime, "uid1", userName, userEmail, anonymous, numVote);
-
-        long pollId2 = 456;
-        String pollTitle2 = "Test Poll #2";
-        String pollDecription2 = "Test Poll #2's Description.";
-        String pollChoiceA2 = "Test Poll #2 choice A";
-        String pollChoiceB2 = "Test Poll #2 choice B";
-        String pollChoiceC2 = "Test Poll #2 choice C";
-        String pollChoiceD2 = "Test Poll #2 choice D";
-        String pollPostTime2 = "Yesterday";
-        String userName2 = "User_Admin_2";
-        String userEmail2 = "Admin_2@pollcial.com";
-        boolean anonymous2 = false;
-        int numVote2 = 300;
-
-        SinglePoll test_poll_2 = new SinglePoll(pollTitle2, pollDecription2, pollChoiceA2, pollChoiceB2,
-                pollChoiceC2, pollChoiceD2, pollPostTime2, "uid2", userName2, userEmail2, anonymous2, numVote2);
-
-        /********************* Test ************************/
-
-
-
-
-
         ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
-        final ArrayList<SinglePoll> allPolls = new ArrayList<>();
-
-        /* TODO: replace these two lines, store all SinglePoll objects inside "allPolls" */
-        allPolls.add(test_poll_1);
-        allPolls.add(test_poll_2);
 
 
-
-        PollsAdapter allPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
+        mPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
 
         // connect ListView with the adapter
-        allPollsListView.setAdapter(allPollsAdapter);
+        allPollsListView.setAdapter(mPollsAdapter);
+
+
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
+        mPollReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                allPolls.clear();
+
+                for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
+                    // TODO: handle the post
+                    SinglePoll poll = pollSnapshot.getValue(SinglePoll.class);
+                    allPolls.add(poll);
+
+
+                }
+                mPollsAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
         allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -148,6 +134,9 @@ public class DiscoverActivity extends AppCompatActivity
             }
         });
     }
+
+
+
 
     @Override
     public void onBackPressed() {
