@@ -1,6 +1,7 @@
 package com.example.mac.pollcial;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -72,6 +73,8 @@ public class NewPostActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        startActivity(new Intent(NewPostActivity.this, DiscoverActivity.class));
 
         return true;
     }
