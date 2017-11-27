@@ -43,7 +43,8 @@ public class DiscoverActivity extends AppCompatActivity
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
-    PollsAdapter mPollsAdapter;
+    private PollsAdapter mPollsAdapter;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,17 @@ public class DiscoverActivity extends AppCompatActivity
                 viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
                 viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
                 viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
+
+                //TODO: Check if the user can edit.
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = user.getUid();
+                if (uid == currPoll.getUid()){
+
+                }
+
+                else {
+
+                }
 
                 startActivity(viewPollIntent);
 
