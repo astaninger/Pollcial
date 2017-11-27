@@ -5,7 +5,6 @@ package com.example.mac.pollcial;
  */
 
 public class SinglePoll{
-    private long pollId; // poll's ID
     private String pollTitle; // poll's title
     private String pollDecription; // poll's description
     private String pollChoiceA; // user specified choices, at least 2, at most 4
@@ -17,12 +16,13 @@ public class SinglePoll{
     private String userEmail; // user email address
     private boolean anonymous; // if true, do not display userName on screen
     private int numVote; // the number of votes that have been submitted
+    private String uid;
 
-    public SinglePoll(long pollId, String pollTitle, String pollDecription, String pollChoiceA,
+    public SinglePoll(String pollTitle, String pollDecription, String pollChoiceA,
                       String pollChoiceB, String pollChoiceC, String pollChoiceD,
-                      String pollPostTime, String userName, String userEmail, boolean anonymous, int numVote) {
+                      String pollPostTime, String uid, String userName, String userEmail, boolean anonymous, int numVote) {
         // TODO: remove pollId field, add Uid field
-        this.pollId = pollId;
+        this.uid = uid;
         this.pollTitle = pollTitle;
         this.pollDecription = pollDecription;
         this.pollChoiceA = pollChoiceA;
@@ -36,9 +36,7 @@ public class SinglePoll{
         this.numVote = numVote;
     }
 
-    public long getPollId() {
-        return pollId;
-    }
+    public String getUid() {return uid;}
 
     public String getPollTitle() {
         return pollTitle;
@@ -84,9 +82,7 @@ public class SinglePoll{
         return anonymous;
     }
 
-    public void setPollId(long pollId) {
-        this.pollId = pollId;
-    }
+    public void setUid(String uid) {this.uid = uid;}
 
     public void setPollTitle(String pollTitle) {
         this.pollTitle = pollTitle;

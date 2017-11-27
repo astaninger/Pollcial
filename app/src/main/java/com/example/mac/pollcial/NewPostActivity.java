@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class NewPostActivity extends AppCompatActivity {
 
@@ -96,16 +97,16 @@ public class NewPostActivity extends AppCompatActivity {
 
                 //poll object. Not sure how to get username, useremail, time, and pollID.
                 // TODO: add Firebase authentication to this file so we can get user
-                /* user = FirebaseAuth.getInstance().getCurrentUser();
-                 * String uid = user.getUid();
-                 * String username = user.geDisplayName();
-                 * String email = user.getEmail();
-                 */
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = user.getUid();
+                String username = user.getDisplayName();
+                String email = user.getEmail();
+
                 // TODO: change SinglePoll - remove pollId field, add Uid field
                 //need to pass poll object to firebase.
-                poll = new SinglePoll(0, pollTitle.getText().toString(), pollDescription.getText().toString()
+                poll = new SinglePoll(pollTitle.getText().toString(), pollDescription.getText().toString()
                         , pollChoiceA.getText().toString(), pollChoiceB.getText().toString(), pollChoiceC.getText().toString(),
-                        pollChoiceD.getText().toString(), "FAKETIME", "FAKEUSERNAME", "FAKEEMAIL", anon.isChecked(), 0);
+                        pollChoiceD.getText().toString(), "Faketime", uid, username, email, anon.isChecked(), 0);
 
 
 

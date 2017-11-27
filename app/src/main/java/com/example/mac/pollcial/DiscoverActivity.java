@@ -78,8 +78,8 @@ public class DiscoverActivity extends AppCompatActivity
         boolean anonymous = false;
         int numVote = 12;
 
-        SinglePoll test_poll_1 = new SinglePoll(pollId, pollTitle, pollDecription, pollChoiceA, pollChoiceB,
-                            pollChoiceC, pollChoiceD, pollPostTime, userName, userEmail, anonymous, numVote);
+        SinglePoll test_poll_1 = new SinglePoll(pollTitle, pollDecription, pollChoiceA, pollChoiceB,
+                            pollChoiceC, pollChoiceD, pollPostTime, "uid1", userName, userEmail, anonymous, numVote);
 
         long pollId2 = 456;
         String pollTitle2 = "Test Poll #2";
@@ -94,8 +94,8 @@ public class DiscoverActivity extends AppCompatActivity
         boolean anonymous2 = false;
         int numVote2 = 300;
 
-        SinglePoll test_poll_2 = new SinglePoll(pollId2, pollTitle2, pollDecription2, pollChoiceA2, pollChoiceB2,
-                pollChoiceC2, pollChoiceD2, pollPostTime2, userName2, userEmail2, anonymous2, numVote2);
+        SinglePoll test_poll_2 = new SinglePoll(pollTitle2, pollDecription2, pollChoiceA2, pollChoiceB2,
+                pollChoiceC2, pollChoiceD2, pollPostTime2, "uid2", userName2, userEmail2, anonymous2, numVote2);
 
         /********************* Test ************************/
 
