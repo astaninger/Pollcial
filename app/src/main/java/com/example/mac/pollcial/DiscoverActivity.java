@@ -24,9 +24,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class DiscoverActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,8 @@ public class DiscoverActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         toolbar.setTitle("Discover");
 
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +223,11 @@ public class DiscoverActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             startActivity(new Intent(DiscoverActivity.this, LoginActivity.class));
+            mFirebaseAuth.signOut();
+            mFirebaseUser = null;
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
