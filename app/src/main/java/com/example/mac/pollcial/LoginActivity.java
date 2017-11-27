@@ -56,9 +56,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    // Firebase
-    private FirebaseAuth mAuth;
-
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -78,14 +75,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private EditText btnForgetPassword;
 
+    // Firebase
+    private FirebaseAuth mAuth;
+    private FirebaseUser mFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Initialize FirebaseAuth
+        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mAuth.getCurrentUser();
+
+        if (mFirebaseUser != null) {
+            // Signed in, launch the Discover activity
+            startActivity(new Intent(this, DiscoverActivity.class));
+            finish();
+            return;
+        }
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -237,6 +245,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("login", "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                //if signin successful, render discovery page
+                                startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("login", "signInWithEmail:failure", task.getException());
@@ -247,9 +257,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             // ...
                         }
                     });
-
-            //if signin successful, render discovery page
-            startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
         }
 
 
