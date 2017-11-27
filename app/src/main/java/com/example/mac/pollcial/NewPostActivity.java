@@ -18,6 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class NewPostActivity extends AppCompatActivity {
 
     private SinglePoll poll;
@@ -105,11 +108,13 @@ public class NewPostActivity extends AppCompatActivity {
                 String username = user.getDisplayName();
                 String email = user.getEmail();
 
+                String postTime = DateFormat.getDateTimeInstance().format(new Date());
+
                 // TODO: change SinglePoll - remove pollId field, add Uid field
                 //need to pass poll object to firebase.
                 poll = new SinglePoll(pollTitle.getText().toString(), pollDescription.getText().toString()
                         , pollChoiceA.getText().toString(), pollChoiceB.getText().toString(), pollChoiceC.getText().toString(),
-                        pollChoiceD.getText().toString(), "Faketime", uid, username, email, anon.isChecked(), 0);
+                        pollChoiceD.getText().toString(), postTime, uid, username, email, anon.isChecked(), 0);
 
 
 
