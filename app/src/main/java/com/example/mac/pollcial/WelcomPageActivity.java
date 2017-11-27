@@ -70,7 +70,7 @@ public class WelcomPageActivity extends AppCompatActivity {
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            hide();
+            show();
         }
     };
     /**
@@ -142,11 +142,11 @@ public class WelcomPageActivity extends AppCompatActivity {
     }
 
     private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
+        //if (mVisible) {
+        //    hide();
+        //} else {
             show();
-        }
+        //}
     }
 
     private void hide() {
