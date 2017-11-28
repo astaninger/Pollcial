@@ -244,7 +244,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("login", "signInWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
                                 //if signin successful, render discovery page
                                 startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
                             } else {
@@ -254,8 +253,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                         Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this, LoginActivity.class));
                             }
-
-                            // ...
                         }
                     });
         }

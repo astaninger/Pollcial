@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
 
     // firebase
     private FirebaseAuth mAuth;
+    private FirebaseUser mFirebaseUser;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -71,6 +73,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mUsernameView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -97,6 +100,8 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
                 return false;
             }
         });
+
+        mUsernameView = (EditText) findViewById(R.id.username);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_up_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -167,10 +172,12 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mUsernameView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        final String username = mUsernameView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -210,18 +217,22 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("signup", "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                mFirebaseUser = mAuth.getCurrentUser();
+                                if(mFirebaseUser != null) {
+                                    UserProfileChangeRequest update = new UserProfileChangeRequest
+                                            .Builder().setDisplayName(username).build();
+                                    mFirebaseUser.updateProfile(update);
+                                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                }
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("signup", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(SignupActivity.this, "Authentication failed.",
+                                Toast.makeText(SignupActivity.this, "Sign up failed.",
                                         Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(SignupActivity.this, SignupActivity.class));
                             }
-
-                            // ...
                         }
                     });
-            startActivity(new Intent(SignupActivity.this, DiscoverActivity.class));
         }
     }
 
