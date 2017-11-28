@@ -14,7 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class ProfileActivity extends AppCompatActivity {
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +28,9 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         //this block adds a back button to the upper left of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,6 +59,9 @@ public class ProfileActivity extends AppCompatActivity {
                 changePassword();
             }
         });
+
+        EditText username = (EditText) findViewById(R.id.txt_profile_username);
+        username.setText(mFirebaseUser.getDisplayName());
     }
 
     private void changeUsername() {

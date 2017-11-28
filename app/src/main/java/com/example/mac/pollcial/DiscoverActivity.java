@@ -74,6 +74,9 @@ public class DiscoverActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
+        username.setText(mFirebaseUser.getDisplayName());
 
 
         ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
