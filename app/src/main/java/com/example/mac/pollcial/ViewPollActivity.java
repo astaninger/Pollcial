@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.content.ClipboardManager;
+import android.content.ClipData;
 
 import java.util.ArrayList;
 
@@ -51,14 +54,6 @@ public class ViewPollActivity extends AppCompatActivity {
         String currChoiceD = trigerIntent.getStringExtra("currChoiceD");
 
         String currPollID = trigerIntent.getStringExtra("currPollID"); // <--- use this as poll ID for share
-
-
-        Context context = getApplicationContext();
-        CharSequence text = currPollID;
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
 
         View currView = this.findViewById(android.R.id.content);
 
@@ -108,6 +103,7 @@ public class ViewPollActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu_search; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_share, menu);
+
         return true;
     }
 
@@ -118,9 +114,18 @@ public class ViewPollActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_sharing) {
+        View currView = this.findViewById(android.R.id.content);
+        Intent trigerIntent = getIntent(); // get the last Intent that triger this current Intent
+        // get all needed information about poll from trigerIntent
+        //TODO: SHOULD DISPLAY NUM VOTED ON POLL
+        String currPollID = trigerIntent.getStringExtra("currPollID");
 
+        if (id == R.id.action_sharing) {
+            Toast.makeText(getApplicationContext(), "The poll ID saved. Paste this into the search bar to open the poll",
+                    Toast.LENGTH_LONG).show();
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("label", currPollID);
+            clipboard.setPrimaryClip(clip);
             return true;
         }
         return super.onOptionsItemSelected(item);
