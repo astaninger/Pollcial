@@ -71,6 +71,16 @@ public class ViewPollActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 RadioGroup selectionGroup = findViewById(R.id.choice);
+
+                if (selectionGroup.getCheckedRadioButtonId() == -1) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Please make a choice!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    return;
+                }
+
                 int choiceID = selectionGroup.getCheckedRadioButtonId();
                 RadioButton selectedButton = findViewById(choiceID);
                 String selectedtext = selectedButton.getText().toString();
@@ -105,6 +115,12 @@ public class ViewPollActivity extends AppCompatActivity {
                     currNumVoted++;
                     mPollReference.child(currPollID).child("numVoteD").setValue(currNumVoted);
                 }
+
+                Context context = getApplicationContext();
+                CharSequence text = "Vote received!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         });
 
