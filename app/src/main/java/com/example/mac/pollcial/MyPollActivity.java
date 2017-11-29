@@ -185,7 +185,7 @@ public class MyPollActivity extends AppCompatActivity
         MenuItem item = menu.findItem(R.id.action_searching);
         SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(item);
 
-        mSearchView.setQueryHint("Search words or poll ID");
+        mSearchView.setQueryHint("Paste poll ID here");
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
