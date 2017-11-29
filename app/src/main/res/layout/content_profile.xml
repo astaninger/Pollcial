@@ -71,7 +71,6 @@
             android:ems="10"
             android:gravity="left"
             android:inputType="textPersonName"
-            android:text="JERRY"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
@@ -133,7 +132,6 @@
             android:focusable="false"
             android:gravity="left"
             android:inputType="textEmailAddress"
-            android:text="a@a.edu"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="234dp" />
     </LinearLayout>

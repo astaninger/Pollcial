@@ -32,6 +32,26 @@ public class ProfileActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
+        // fill in username
+        EditText username = (EditText) findViewById(R.id.txt_profile_username);
+
+        if(mFirebaseUser.getDisplayName() != null) {
+            username.setText(mFirebaseUser.getDisplayName());
+        }
+        else {
+            username.setText("Guest");
+        }
+
+        // fill in email
+        EditText password = (EditText) findViewById(R.id.txt_email);
+
+        if(mFirebaseUser.getEmail() != null) {
+            password.setText(mFirebaseUser.getEmail());
+        }
+        else {
+            password.setText("Guest");
+        }
+
         //this block adds a back button to the upper left of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -59,9 +79,6 @@ public class ProfileActivity extends AppCompatActivity {
                 changePassword();
             }
         });
-
-        EditText username = (EditText) findViewById(R.id.txt_profile_username);
-        username.setText(mFirebaseUser.getDisplayName());
     }
 
     private void changeUsername() {
@@ -75,12 +92,35 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void changePassword() {
-        Context context = getApplicationContext();
-        CharSequence text = "Hello toast!";
-        int duration = Toast.LENGTH_SHORT;
+        // try to send password reset email
+       /* mFirebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // prepare toast
+                        Context context = getApplicationContext();
+                        int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+                        // success
+                        if (task.isSuccessful()) {
+                            Log.d("sendResetEmail", "Email sent.");
+                            CharSequence successInfo = "An email containing password reset instruction has been sent to your email address.";
+
+                            Toast displaySuccess = Toast.makeText(context, successInfo, duration);
+                            displaySuccess.show();
+
+                            // go back to login page
+                            startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
+                        } else {
+                            Log.e("sendResetEmail", "Email not found");
+
+                            CharSequence failInfo = "The email could not be found.";
+
+                            Toast displayFail = Toast.makeText(context, failInfo, duration);
+                            displayFail.show();
+                        }
+                    }
+                }); */
 
     }
 

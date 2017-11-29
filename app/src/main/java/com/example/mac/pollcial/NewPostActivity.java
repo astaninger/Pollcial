@@ -106,6 +106,11 @@ public class NewPostActivity extends AppCompatActivity {
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 String uid = user.getUid();
                 String username = user.getDisplayName();
+
+                if(username == null) {
+                    username = "Guest";
+                }
+
                 String email = user.getEmail();
 
                 String postTime = DateFormat.getDateTimeInstance().format(new Date());

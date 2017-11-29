@@ -113,7 +113,7 @@
                 android:id="@+id/txt_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@color/colorPrimary"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="Enter your result" />
@@ -132,7 +132,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimary"
                 android:text="Edit"
                 android:textColor="#ffffff" />
 
@@ -142,7 +142,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimary"
                 android:text="Update Result"
                 android:textColor="#ffffff" />
         </LinearLayout>

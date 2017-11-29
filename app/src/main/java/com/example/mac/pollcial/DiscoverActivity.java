@@ -77,7 +77,13 @@ public class DiscoverActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
-        username.setText(mFirebaseUser.getDisplayName());
+
+        if(mFirebaseUser.getDisplayName() != null) {
+            username.setText(mFirebaseUser.getDisplayName());
+        }
+        else {
+            username.setText("Guest");
+        }
 
 
         ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
@@ -171,7 +177,7 @@ public class DiscoverActivity extends AppCompatActivity
         MenuItem item = menu.findItem(R.id.action_searching);
         SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(item);
 
-        mSearchView.setQueryHint("Search words or poll ID");
+        mSearchView.setQueryHint("Paste poll ID here");
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
