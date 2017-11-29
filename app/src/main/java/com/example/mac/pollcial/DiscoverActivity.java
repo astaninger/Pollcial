@@ -45,6 +45,7 @@ public class DiscoverActivity extends AppCompatActivity
     private DatabaseReference mFirebaseDatabaseReference;
     private PollsAdapter mPollsAdapter;
     private FirebaseUser user;
+    private int i = 0; //detlete me
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +176,50 @@ public class DiscoverActivity extends AppCompatActivity
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls").child(query);
+                mPollReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            SinglePoll currPoll = dataSnapshot.getValue(SinglePoll.class);
+                            Intent viewPollIntent = new Intent(DiscoverActivity.this, ViewPollActivity.class);
+                            // pass all info about current poll
+                            viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
+                            viewPollIntent.putExtra("currNumVotes", Integer.toString(currPoll.getNumVote()));
+                            viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
+                            viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
+                            viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
+                            viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
+                            viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
+
+                            //TODO: Check if the user can edit.
+                            user = FirebaseAuth.getInstance().getCurrentUser();
+                            String uid = user.getUid();
+                            if (uid == currPoll.getUid()) {
+
+                            } else {
+
+                            }
+                            Toast.makeText(DiscoverActivity.this, "Opening a poll" + i++,
+                                    Toast.LENGTH_SHORT).show();
+                            startActivity(viewPollIntent);
+                        }
+                        else
+                        {
+                            Toast.makeText(DiscoverActivity.this, "PollID does not exist.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 return false;
             }
 
