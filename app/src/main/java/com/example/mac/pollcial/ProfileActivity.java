@@ -1,6 +1,7 @@
 package com.example.mac.pollcial;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -108,12 +110,21 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void changeUsername() {
-        Context context = getApplicationContext();
-        CharSequence text = "Hello toast!";
-        int duration = Toast.LENGTH_SHORT;
+        EditText usernameText = (EditText) findViewById(R.id.txt_profile_username);
+        String newUsername = usernameText.getText().toString();
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(newUsername).build();
+
+        mFirebaseUser.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("Update username", "User profile updated.");
+                        }
+                    }
+                });
     }
 
 
