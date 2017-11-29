@@ -76,7 +76,13 @@ public class DiscoverActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
-        username.setText(mFirebaseUser.getDisplayName());
+
+        if(mFirebaseUser.getDisplayName() != null) {
+            username.setText(mFirebaseUser.getDisplayName());
+        }
+        else {
+            username.setText("Guest");
+        }
 
 
         ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
