@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mGuestAccountButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                showProgress(true);
                 useGuestAccount();
             }
         });
