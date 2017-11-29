@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -25,6 +28,26 @@ public class NewPostActivity extends AppCompatActivity {
 
     private SinglePoll poll;
     private Button btnCancel;
+
+    private EditText pollTitle;
+    private EditText pollDescription;
+    private EditText pollChoiceA;
+    private EditText pollChoiceB;
+    private EditText pollChoiceC;
+    private EditText pollChoiceD;
+    private CheckBox anon;
+
+    private String uid;
+    private String username;
+    private String email;
+    private String postTime;
+    private String title;
+    private String description;
+    private String choiceA;
+    private String choiceB;
+    private String choiceC;
+    private String choiceD;
+    private int numVote;
 
     // Firebase instance variables
     private DatabaseReference mFirebaseDatabaseReference;
@@ -63,6 +86,27 @@ public class NewPostActivity extends AppCompatActivity {
         });*/
     }
 
+    private boolean validatePollInfo() {
+        boolean valid = true;
+        if(TextUtils.isEmpty(title)) {
+            pollTitle.setError(getString(R.string.error_field_required));
+            valid = false;
+        }
+        if(TextUtils.isEmpty(description)) {
+            pollDescription.setError(getString(R.string.error_field_required));
+            valid = false;
+        }
+        if(TextUtils.isEmpty(choiceA)) {
+            pollChoiceA.setError(getString(R.string.error_field_required));
+            valid = false;
+        }
+        if(TextUtils.isEmpty(choiceB)) {
+            pollChoiceB.setError(getString(R.string.error_field_required));
+            valid = false;
+        }
+        return valid;
+    }
+
     private boolean publishPoll() {
         DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls").push();
         mPollReference.setValue(poll);
@@ -92,38 +136,36 @@ public class NewPostActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
 
                 //The fields for making a new poll
-                EditText pollTitle = (EditText)findViewById(R.id.newPostTitle);
-                EditText pollDescription = (EditText)findViewById(R.id.newPostContent);
-                EditText pollChoiceA = (EditText)findViewById(R.id.choiceA);
-                EditText pollChoiceB = (EditText)findViewById(R.id.choiceB);
-                EditText pollChoiceC = (EditText)findViewById(R.id.choiceC);
-                EditText pollChoiceD = (EditText)findViewById(R.id.choiceD);
-                CheckBox anon = (CheckBox)findViewById(R.id.cb_post_as_anonymous);
+                pollTitle = (EditText)findViewById(R.id.newPostTitle);
+                pollDescription = (EditText)findViewById(R.id.newPostContent);
+                pollChoiceA = (EditText)findViewById(R.id.choiceA);
+                pollChoiceB = (EditText)findViewById(R.id.choiceB);
+                pollChoiceC = (EditText)findViewById(R.id.choiceC);
+                pollChoiceD = (EditText)findViewById(R.id.choiceD);
+                anon = (CheckBox)findViewById(R.id.cb_post_as_anonymous);
 
 
                 //poll object. Not sure how to get username, useremail, time, and pollID.
                 // TODO: add Firebase authentication to this file so we can get user
                 user = FirebaseAuth.getInstance().getCurrentUser();
-                String uid = user.getUid();
-                String username = user.getDisplayName();
+                uid = user.getUid();
+                username = (user.getDisplayName() == null) ? "Guest" : user.getDisplayName();
+                email = user.getEmail();
+                postTime = DateFormat.getDateTimeInstance().format(new Date());
+                title = pollTitle.getText().toString();
+                description = pollDescription.getText().toString();
+                choiceA = pollChoiceA.getText().toString();
+                choiceB = pollChoiceB.getText().toString();
+                choiceC = pollChoiceC.getText().toString();
+                choiceD = pollChoiceD.getText().toString();
+                numVote = 0;
 
-                if(username == null) {
-                    username = "Guest";
+                if(validatePollInfo()) {
+                    //need to pass poll object to firebase.
+                    poll = new SinglePoll(title, description, choiceA, choiceB, choiceC,
+                            choiceD, postTime, uid, username, email, anon.isChecked(), numVote);
+                    publishPoll();
                 }
-
-                String email = user.getEmail();
-
-                String postTime = DateFormat.getDateTimeInstance().format(new Date());
-
-                // TODO: change SinglePoll - remove pollId field, add Uid field
-                //need to pass poll object to firebase.
-                poll = new SinglePoll(pollTitle.getText().toString(), pollDescription.getText().toString()
-                        , pollChoiceA.getText().toString(), pollChoiceB.getText().toString(), pollChoiceC.getText().toString(),
-                        pollChoiceD.getText().toString(), postTime, uid, username, email, anon.isChecked(), 0);
-
-
-
-                publishPoll();
 
                 return true;
             }
