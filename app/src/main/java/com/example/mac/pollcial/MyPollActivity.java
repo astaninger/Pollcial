@@ -106,7 +106,7 @@ public class MyPollActivity extends AppCompatActivity
                     user = FirebaseAuth.getInstance().getCurrentUser();
                     String uid = user.getUid();
                     if (uid.equals(poll.getUid())){
-                        allPolls.add(poll);
+                        allPolls.add(0,poll);
                     }
                 }
                 mPollsAdapter.notifyDataSetChanged();
