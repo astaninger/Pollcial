@@ -103,6 +103,8 @@ public class ProfileActivity extends AppCompatActivity {
                     displayGuestInfo.show();
                 }
                 else {
+                    //render a new activity here
+                    startActivity(new Intent(ProfileActivity.this, ChangePasswordActivity.class));
                     changePassword();
                 }
             }

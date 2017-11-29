@@ -77,6 +77,10 @@
         <activity
             android:name=".TempViewPollActivity"
             android:label="@string/title_activity_temp_view_poll"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/title_activity_change_password"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
