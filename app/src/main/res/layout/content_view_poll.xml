@@ -122,7 +122,7 @@
                 android:id="@+id/txt_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@color/colorPrimary"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="Enter your comment (optional)" />
@@ -133,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimary"
             android:text="VOTE!"
             android:textColor="#ffffff" />
 

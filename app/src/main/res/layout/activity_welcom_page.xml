@@ -23,7 +23,7 @@
             android:background="@android:color/background_light"
             android:gravity="bottom|center"
             android:text="Pollcial"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="60sp"
             android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
             android:background="@android:color/background_light"
             android:gravity="top|right"
             android:text="by Team JERRY"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
             android:gravity="center"
             android:keepScreenOn="true"
             android:text="A GREAT platform that help you make choices."
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -92,7 +92,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimary"
                 android:text="Explore Pollcial"
                 android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
