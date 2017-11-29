@@ -41,7 +41,6 @@ public class ViewPollActivity extends AppCompatActivity {
 
         Intent trigerIntent = getIntent(); // get the last Intent that triger this current Intent
         // get all needed information about poll from trigerIntent
-        //TODO: SHOULD DISPLAY NUM VOTED ON POLL
         String currTitle = trigerIntent.getStringExtra("currTitle");
         String currPostTimeAndAuthor = trigerIntent.getStringExtra("currPostTimeAndAuthor");
         String currNumVotes = trigerIntent.getStringExtra("currNumVotes");

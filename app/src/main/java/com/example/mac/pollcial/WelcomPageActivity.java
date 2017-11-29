@@ -96,7 +96,7 @@ public class WelcomPageActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
-    private static int TIME_OUT = 1000; //Time to render the next activity
+    private static int TIME_OUT = 500; //Time to render the next activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,14 +104,6 @@ public class WelcomPageActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
-        if (mFirebaseUser != null) {
-            // Signed in, launch the Discover activity
-
-            startActivity(new Intent(this, DiscoverActivity.class));
-            finish();
-            return;
-        }
 
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -125,6 +117,21 @@ public class WelcomPageActivity extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
+        btnSkip = (Button)findViewById(R.id.btn_skip);
+
+        if (mFirebaseUser != null) {
+            // Signed in, launch the Discover activity
+
+            btnSkip.setVisibility(View.GONE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(WelcomPageActivity.this, DiscoverActivity.class));
+                    finish();
+                }
+            }, TIME_OUT);
+        }
+
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -133,8 +140,6 @@ public class WelcomPageActivity extends AppCompatActivity {
                 toggle();
             }
         });
-
-        btnSkip = (Button)findViewById(R.id.btn_skip);
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
