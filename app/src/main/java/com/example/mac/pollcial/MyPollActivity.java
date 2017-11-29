@@ -14,12 +14,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.support.v7.widget.SearchView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MyPollActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ArrayList<SinglePoll> allPolls = new ArrayList<>();
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private DatabaseReference mFirebaseDatabaseReference;
+    private PollsAdapter mPollsAdapter;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +49,9 @@ public class MyPollActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("My Polls");
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_new_post);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +73,81 @@ public class MyPollActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
+        username.setText(mFirebaseUser.getDisplayName());
+
+        ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
+
+
+        mPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
+
+        // connect ListView with the adapter
+        allPollsListView.setAdapter(mPollsAdapter);
+
+
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
+        mPollReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                allPolls.clear();
+
+                for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
+                    // TODO: handle the post
+                    SinglePoll poll = pollSnapshot.getValue(SinglePoll.class);
+
+                    user = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = user.getUid();
+                    if (uid.equals(poll.getUid())){
+                        allPolls.add(poll);
+                    }
+                }
+                mPollsAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent viewPollIntent = new Intent(MyPollActivity.this, ViewPollActivity.class);
+
+                SinglePoll currPoll = allPolls.get(position);
+                String timeAndAuthor = currPoll.getPollPostTime() + " by " + currPoll.getUserName();
+                // pass all info about current poll
+                viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
+                viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
+                viewPollIntent.putExtra("currNumVotes", Integer.toString(currPoll.getNumVote()));
+                viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
+                viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
+                viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
+                viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
+                viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
+
+                //TODO: Check if the user can edit.
+                /*
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = user.getUid();
+                if (uid == currPoll.getUid()){
+
+                }
+
+                else {
+
+                }
+
+                startActivity(viewPollIntent);
+                */
+
+            }
+        });
  /*
         LinearLayout bViewPoll = (LinearLayout) findViewById(R.id.btn_view_poll);
         bViewPoll.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +240,13 @@ public class MyPollActivity extends AppCompatActivity
             startActivity(new Intent(MyPollActivity.this, SettingsActivity.class));
 
         } else if (id == R.id.nav_logout) {
+
+            startActivity(new Intent(MyPollActivity.this, LoginActivity.class));
+            mFirebaseAuth.signOut();
+            mFirebaseUser = null;
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return true;
 
         }
 
