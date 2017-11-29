@@ -3,17 +3,22 @@ package com.example.mac.pollcial;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,6 +26,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private String username;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +39,24 @@ public class ProfileActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-        // fill in username
-        EditText username = (EditText) findViewById(R.id.txt_profile_username);
+        username = mFirebaseUser.getDisplayName();
+        email = mFirebaseUser.getEmail();
 
-        if(mFirebaseUser.getDisplayName() != null) {
-            username.setText(mFirebaseUser.getDisplayName());
+        // fill in username
+        EditText usernameText = (EditText) findViewById(R.id.txt_profile_username);
+
+        if(username != null) {
+            usernameText.setText(username);
         }
         else {
-            username.setText("Guest");
+            usernameText.setText("Guest");
         }
 
         // fill in email
-        EditText password = (EditText) findViewById(R.id.txt_email);
+        TextView password = (TextView) findViewById(R.id.txt_email);
 
-        if(mFirebaseUser.getEmail() != null) {
-            password.setText(mFirebaseUser.getEmail());
+        if(email != null) {
+            password.setText(email);
         }
         else {
             password.setText("Guest");
@@ -63,20 +73,36 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        Button changePasswordBtn = (Button) findViewById(R.id.btn_change_password);
-        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                changeUsername();
-            }
-        });
-
         EditText saveUsernameChange = (EditText) findViewById(R.id.btn_save_username_change);
         saveUsernameChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changePassword();
+                if(username == null) {
+                    CharSequence guestInfo = "You cannot do this as a guest.";
+
+                    Toast displayGuestInfo = Toast.makeText(getApplicationContext(), guestInfo, Toast.LENGTH_SHORT);
+                    displayGuestInfo.show();
+                }
+                else {
+                    changeUsername();
+                }
+            }
+        });
+
+
+        Button changePasswordBtn = (Button) findViewById(R.id.btn_change_password);
+        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(email == null) {
+                    CharSequence guestInfo = "You cannot do this as a guest.";
+
+                    Toast displayGuestInfo = Toast.makeText(getApplicationContext(), guestInfo, Toast.LENGTH_SHORT);
+                    displayGuestInfo.show();
+                }
+                else {
+                    changePassword();
+                }
             }
         });
     }
@@ -93,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void changePassword() {
         // try to send password reset email
-       /* mFirebaseAuth.sendPasswordResetEmail(email)
+        mFirebaseAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -108,19 +134,17 @@ public class ProfileActivity extends AppCompatActivity {
 
                             Toast displaySuccess = Toast.makeText(context, successInfo, duration);
                             displaySuccess.show();
+                        }
+                        else {
+                            // honestly shouldn't be able to fail but just in case
+                            Log.e("sendResetEmail", "Reset failed.");
+                            CharSequence failInfo = "Something went wrong.";
 
-                            // go back to login page
-                            startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
-                        } else {
-                            Log.e("sendResetEmail", "Email not found");
-
-                            CharSequence failInfo = "The email could not be found.";
-
-                            Toast displayFail = Toast.makeText(context, failInfo, duration);
+                            Toast displayFail = Toast.makeText(context,  failInfo, duration);
                             displayFail.show();
                         }
                     }
-                }); */
+                });
 
     }
 
