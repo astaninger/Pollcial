@@ -62,6 +62,10 @@ public class ViewPollActivity extends AppCompatActivity {
         TextView choiceC = (TextView)currView.findViewById(R.id.rdb_choice_c);
         TextView choiceD = (TextView)currView.findViewById(R.id.rdb_choice_d);
 
+        //if the no choice C or D then do not display them
+        if (currChoiceC.equals("")) choiceC.setVisibility(View.INVISIBLE);
+        if (currChoiceD.equals("")) choiceD.setVisibility(View.INVISIBLE);
+
         title.setText(currTitle);
         time_n_author.setText(currPostTimeAndAuthor);
         numVote.setText("Votes made: " + currNumVotes);
