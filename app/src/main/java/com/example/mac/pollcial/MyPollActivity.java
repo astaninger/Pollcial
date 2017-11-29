@@ -142,9 +142,10 @@ public class MyPollActivity extends AppCompatActivity
                 else {
 
                 }
+                */
 
                 startActivity(viewPollIntent);
-                */
+
 
             }
         });
