@@ -96,6 +96,8 @@ public class WelcomPageActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
+    private static int TIME_OUT = 1000; //Time to render the next activity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +107,7 @@ public class WelcomPageActivity extends AppCompatActivity {
 
         if (mFirebaseUser != null) {
             // Signed in, launch the Discover activity
+
             startActivity(new Intent(this, DiscoverActivity.class));
             finish();
             return;
