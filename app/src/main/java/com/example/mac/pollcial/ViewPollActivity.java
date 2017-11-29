@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -95,6 +96,7 @@ public class ViewPollActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu_search; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_share, menu);
+
         return true;
     }
 

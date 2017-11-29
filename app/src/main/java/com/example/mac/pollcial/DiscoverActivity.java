@@ -45,7 +45,7 @@ public class DiscoverActivity extends AppCompatActivity
     private DatabaseReference mFirebaseDatabaseReference;
     private PollsAdapter mPollsAdapter;
     private FirebaseUser user;
-    private int i = 0; //detlete me
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +146,6 @@ public class DiscoverActivity extends AppCompatActivity
                 if (uid == currPoll.getUid()){
 
                 }
-
                 else {
 
                 }
@@ -208,8 +207,6 @@ public class DiscoverActivity extends AppCompatActivity
                             } else {
 
                             }
-                            Toast.makeText(DiscoverActivity.this, "Opening a poll" + i++,
-                                    Toast.LENGTH_SHORT).show();
                             startActivity(viewPollIntent);
                         }
                         else
