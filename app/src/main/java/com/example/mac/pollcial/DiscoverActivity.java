@@ -39,7 +39,7 @@ public class DiscoverActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ArrayList<SinglePoll> allPolls = new ArrayList<>();
-
+    ArrayList<String> allPollIDs = new ArrayList<>();
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
@@ -105,8 +105,9 @@ public class DiscoverActivity extends AppCompatActivity
                 for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
                     // TODO: handle the post
                     SinglePoll poll = pollSnapshot.getValue(SinglePoll.class);
-                    allPolls.add(poll);
-
+                    String pollID = pollSnapshot.getKey();
+                    allPolls.add(0, poll);
+                    allPollIDs.add(0,pollID); // <--- this is the ID list that has 1-to-1 relationship to allPolls
 
                 }
                 mPollsAdapter.notifyDataSetChanged();
@@ -139,7 +140,7 @@ public class DiscoverActivity extends AppCompatActivity
                 viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
                 viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
                 viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
-
+                viewPollIntent.putExtra("currPollID", allPollIDs.get(position));
                 //TODO: Check if the user can edit.
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 String uid = user.getUid();

@@ -51,6 +51,8 @@ public class ViewPollActivity extends AppCompatActivity {
         String currChoiceC = trigerIntent.getStringExtra("currChoiceC");
         String currChoiceD = trigerIntent.getStringExtra("currChoiceD");
 
+        String currPollID = trigerIntent.getStringExtra("currPollID"); // <--- use this as poll ID for share
+
         View currView = this.findViewById(android.R.id.content);
 
         TextView title = (TextView)currView.findViewById(R.id.txt_Title);
