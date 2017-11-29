@@ -125,6 +125,12 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        Context context = getApplicationContext();
+        CharSequence text = "Name change saved";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
 
