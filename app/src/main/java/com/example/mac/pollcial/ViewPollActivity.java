@@ -52,6 +52,14 @@ public class ViewPollActivity extends AppCompatActivity {
 
         String currPollID = trigerIntent.getStringExtra("currPollID"); // <--- use this as poll ID for share
 
+
+        Context context = getApplicationContext();
+        CharSequence text = currPollID;
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+
         View currView = this.findViewById(android.R.id.content);
 
         TextView title = (TextView)currView.findViewById(R.id.txt_Title);

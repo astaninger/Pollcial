@@ -199,6 +199,7 @@ public class DiscoverActivity extends AppCompatActivity
                             viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
                             viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
                             viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
+                            viewPollIntent.putExtra("currPollID", dataSnapshot.getKey());
 
                             //TODO: Check if the user can edit.
                             user = FirebaseAuth.getInstance().getCurrentUser();
