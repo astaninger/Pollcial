@@ -16,6 +16,11 @@ public class SinglePoll{
     private String userEmail; // user email address
     private boolean anonymous; // if true, do not display userName on screen
     private int numVote; // the number of votes that have been submitted
+    private int numVoteA;
+    private int numVoteB;
+    private int numVoteC;
+    private int numVoteD;
+
     private String uid;
 
 
@@ -31,13 +36,19 @@ public class SinglePoll{
         this.userEmail = null;
         this.anonymous = false;
         this.numVote = 0;
+        this.numVoteA = 0;
+        this.numVoteB = 0;
+        this.numVoteC = 0;
+        this.numVoteD = 0;
         this.uid = null;
     }
 
     public SinglePoll(String pollTitle, String pollDecription, String pollChoiceA,
                       String pollChoiceB, String pollChoiceC, String pollChoiceD,
-                      String pollPostTime, String uid, String userName, String userEmail, boolean anonymous, int numVote) {
-        // TODO: remove pollId field, add Uid field
+                      String pollPostTime, String uid, String userName, String userEmail,
+                      boolean anonymous, int numVote, int numVoteA, int numVoteB,
+                      int numVoteC, int numVoteD) {
+
         this.uid = uid;
         this.pollTitle = pollTitle;
         this.pollDecription = pollDecription;
@@ -50,7 +61,19 @@ public class SinglePoll{
         this.userEmail = userEmail;
         this.anonymous = anonymous;
         this.numVote = numVote;
+        this.numVoteA = numVoteA;
+        this.numVoteB = numVoteB;
+        this.numVoteC = numVoteC;
+        this.numVoteD = numVoteD;
     }
+
+    public int getNumVoteA() { return numVoteA; }
+
+    public int getNumVoteB() { return numVoteB; }
+
+    public int getNumVoteC() { return numVoteC; }
+
+    public int getNumVoteD() { return numVoteD; }
 
     public String getUid() {return uid;}
 

@@ -14,15 +14,22 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.ClipboardManager;
 import android.content.ClipData;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class ViewPollActivity extends AppCompatActivity {
+    private DatabaseReference mFirebaseDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +53,60 @@ public class ViewPollActivity extends AppCompatActivity {
         // get all needed information about poll from trigerIntent
         String currTitle = trigerIntent.getStringExtra("currTitle");
         String currPostTimeAndAuthor = trigerIntent.getStringExtra("currPostTimeAndAuthor");
-        String currNumVotes = trigerIntent.getStringExtra("currNumVotes");
+        final String currNumVotes = trigerIntent.getStringExtra("currNumVotes");
         String currDescription = trigerIntent.getStringExtra("currDescription");
-        String currChoiceA = trigerIntent.getStringExtra("currChoiceA");
-        String currChoiceB = trigerIntent.getStringExtra("currChoiceB");
-        String currChoiceC = trigerIntent.getStringExtra("currChoiceC");
-        String currChoiceD = trigerIntent.getStringExtra("currChoiceD");
+        final String currChoiceA = trigerIntent.getStringExtra("currChoiceA");
+        final String currChoiceB = trigerIntent.getStringExtra("currChoiceB");
+        final String currChoiceC = trigerIntent.getStringExtra("currChoiceC");
+        final String currChoiceD = trigerIntent.getStringExtra("currChoiceD");
+        final String currNumVoteA = trigerIntent.getStringExtra("currNumVoteA");
+        final String currNumVoteB = trigerIntent.getStringExtra("currNumVoteB");
+        final String currNumVoteC = trigerIntent.getStringExtra("currNumVoteC");
+        final String currNumVoteD = trigerIntent.getStringExtra("currNumVoteD");
+        final String currPollID = trigerIntent.getStringExtra("currPollID"); // <--- use this as poll ID for share
 
-        String currPollID = trigerIntent.getStringExtra("currPollID"); // <--- use this as poll ID for share
+        Button btnVote = (Button)findViewById(R.id.btn_vote);
+        btnVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                RadioGroup selectionGroup = findViewById(R.id.choice);
+                int choiceID = selectionGroup.getCheckedRadioButtonId();
+                RadioButton selectedButton = findViewById(choiceID);
+                String selectedtext = selectedButton.getText().toString();
+
+                mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
+
+                int currNumVote = Integer.parseInt(currNumVotes);
+                currNumVote++;
+                mPollReference.child(currPollID).child("numVote").setValue(currNumVote);
+
+                if (selectedtext.equals(currChoiceA)) {
+                    int currNumVotea = Integer.parseInt(currNumVoteA);
+                    currNumVotea++;
+                    mPollReference.child(currPollID).child("numVoteA").setValue(currNumVotea);
+                }
+
+                if (selectedtext.equals(currChoiceB)) {
+                    int currNumVoteb = Integer.parseInt(currNumVoteB);
+                    currNumVoteb++;
+                    mPollReference.child(currPollID).child("numVoteB").setValue(currNumVoteb);
+                }
+
+                if (selectedtext.equals(currChoiceC)) {
+                    int currNumVotec = Integer.parseInt(currNumVoteA);
+                    currNumVotec++;
+                    mPollReference.child(currPollID).child("numVoteC").setValue(currNumVotec);
+                }
+
+                if (selectedtext.equals(currChoiceD)) {
+                    int currNumVoted = Integer.parseInt(currNumVoteA);
+                    currNumVoted++;
+                    mPollReference.child(currPollID).child("numVoteD").setValue(currNumVoted);
+                }
+            }
+        });
 
         View currView = this.findViewById(android.R.id.content);
 

@@ -101,6 +101,7 @@ public class DiscoverActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 allPolls.clear();
+                allPollIDs.clear();
 
                 for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
                     // TODO: handle the post
@@ -141,6 +142,11 @@ public class DiscoverActivity extends AppCompatActivity
                 viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
                 viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
                 viewPollIntent.putExtra("currPollID", allPollIDs.get(position));
+                viewPollIntent.putExtra("currNumVoteA", Integer.toString(currPoll.getNumVoteA()));
+                viewPollIntent.putExtra("currNumVoteB", Integer.toString(currPoll.getNumVoteB()));
+                viewPollIntent.putExtra("currNumVoteC", Integer.toString(currPoll.getNumVoteC()));
+                viewPollIntent.putExtra("currNumVoteD", Integer.toString(currPoll.getNumVoteD()));
+
                 //TODO: Check if the user can edit.
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 String uid = user.getUid();

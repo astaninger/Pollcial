@@ -48,6 +48,10 @@ public class NewPostActivity extends AppCompatActivity {
     private String choiceC;
     private String choiceD;
     private int numVote;
+    private int numVoteA;
+    private int numVoteB;
+    private int numVoteC;
+    private int numVoteD;
 
     // Firebase instance variables
     private DatabaseReference mFirebaseDatabaseReference;
@@ -159,11 +163,16 @@ public class NewPostActivity extends AppCompatActivity {
                 choiceC = pollChoiceC.getText().toString();
                 choiceD = pollChoiceD.getText().toString();
                 numVote = 0;
+                numVoteA = 0;
+                numVoteB = 0;
+                numVoteC = 0;
+                numVoteD = 0;
 
                 if(validatePollInfo()) {
                     //need to pass poll object to firebase.
                     poll = new SinglePoll(title, description, choiceA, choiceB, choiceC,
-                            choiceD, postTime, uid, username, email, anon.isChecked(), numVote);
+                            choiceD, postTime, uid, username, email, anon.isChecked(), numVote,
+                            numVoteA, numVoteB, numVoteC, numVoteD);
                     publishPoll();
                 }
 
