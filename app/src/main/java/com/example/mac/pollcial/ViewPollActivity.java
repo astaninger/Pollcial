@@ -105,13 +105,13 @@ public class ViewPollActivity extends AppCompatActivity {
                 }
 
                 if (selectedtext.equals(currChoiceC)) {
-                    int currNumVotec = Integer.parseInt(currNumVoteA);
+                    int currNumVotec = Integer.parseInt(currNumVoteC);
                     currNumVotec++;
                     mPollReference.child(currPollID).child("numVoteC").setValue(currNumVotec);
                 }
 
                 if (selectedtext.equals(currChoiceD)) {
-                    int currNumVoted = Integer.parseInt(currNumVoteA);
+                    int currNumVoted = Integer.parseInt(currNumVoteD);
                     currNumVoted++;
                     mPollReference.child(currPollID).child("numVoteD").setValue(currNumVoted);
                 }
