@@ -77,8 +77,15 @@ public class ProfileActivity extends AppCompatActivity {
         saveUsernameChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(username == null) {
+                    CharSequence guestInfo = "You cannot do this as a guest.";
 
-                changeUsername();
+                    Toast displayGuestInfo = Toast.makeText(getApplicationContext(), guestInfo, Toast.LENGTH_SHORT);
+                    displayGuestInfo.show();
+                }
+                else {
+                    changeUsername();
+                }
             }
         });
 
@@ -87,7 +94,15 @@ public class ProfileActivity extends AppCompatActivity {
         changePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changePassword();
+                if(email == null) {
+                    CharSequence guestInfo = "You cannot do this as a guest.";
+
+                    Toast displayGuestInfo = Toast.makeText(getApplicationContext(), guestInfo, Toast.LENGTH_SHORT);
+                    displayGuestInfo.show();
+                }
+                else {
+                    changePassword();
+                }
             }
         });
     }
