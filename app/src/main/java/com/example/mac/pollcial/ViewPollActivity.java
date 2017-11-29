@@ -41,7 +41,6 @@ public class ViewPollActivity extends AppCompatActivity {
 
         Intent trigerIntent = getIntent(); // get the last Intent that triger this current Intent
         // get all needed information about poll from trigerIntent
-        //TODO: SHOULD DISPLAY NUM VOTED ON POLL
         String currTitle = trigerIntent.getStringExtra("currTitle");
         String currPostTimeAndAuthor = trigerIntent.getStringExtra("currPostTimeAndAuthor");
         String currNumVotes = trigerIntent.getStringExtra("currNumVotes");
@@ -61,6 +60,10 @@ public class ViewPollActivity extends AppCompatActivity {
         TextView choiceB = (TextView)currView.findViewById(R.id.rdb_choice_b);
         TextView choiceC = (TextView)currView.findViewById(R.id.rdb_choice_c);
         TextView choiceD = (TextView)currView.findViewById(R.id.rdb_choice_d);
+
+        //if the no choice C or D then do not display them
+        if (currChoiceC.equals("")) choiceC.setVisibility(View.INVISIBLE);
+        if (currChoiceD.equals("")) choiceD.setVisibility(View.INVISIBLE);
 
         title.setText(currTitle);
         time_n_author.setText(currPostTimeAndAuthor);
