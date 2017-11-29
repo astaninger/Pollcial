@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:clickable="true"
                     android:cursorVisible="false"
                     android:focusable="false"
@@ -95,14 +95,15 @@
                     android:gravity="center"
                     android:inputType="none"
                     android:text="Forgot password?"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/btn_guest_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:clickable="true"
                     android:cursorVisible="false"
                     android:focusable="false"
@@ -110,7 +111,8 @@
                     android:gravity="center"
                     android:inputType="none"
                     android:text="Continue as Guest"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>
