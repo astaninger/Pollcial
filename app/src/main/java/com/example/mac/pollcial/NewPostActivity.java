@@ -126,6 +126,7 @@ public class NewPostActivity extends AppCompatActivity {
         toast.show();
 
         startActivity(new Intent(NewPostActivity.this, DiscoverActivity.class));
+        finish();
 
         return true;
     }

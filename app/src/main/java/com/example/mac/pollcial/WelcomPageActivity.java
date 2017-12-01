@@ -146,6 +146,7 @@ public class WelcomPageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //WelcomPageActivity.this.setContentView(R.layout.activity_login);
                 startActivity(new Intent(WelcomPageActivity.this, LoginActivity.class));
+                finish();
             }
         });
 

@@ -165,6 +165,26 @@ public class DiscoverActivity extends AppCompatActivity
 
 
 
+    @Override
+    public void onRestart(){
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
+        if(mFirebaseUser.getDisplayName() != null) {
+
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            username.setText(mFirebaseUser.getDisplayName());
+        }
+        else {
+            username.setText("Guest");
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -293,5 +313,11 @@ public class DiscoverActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void refresh () {
+
+        finish();
+        startActivity(new Intent(DiscoverActivity.this, DiscoverActivity.class));
     }
 }
