@@ -175,6 +175,27 @@ public class MyPollActivity extends AppCompatActivity
     }
 
     @Override
+    public void onRestart(){
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
+        if(mFirebaseUser.getDisplayName() != null) {
+
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            username.setText(mFirebaseUser.getDisplayName());
+        }
+        else {
+            username.setText("Guest");
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -191,7 +212,7 @@ public class MyPollActivity extends AppCompatActivity
         MenuItem item = menu.findItem(R.id.action_searching);
         SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(item);
 
-        mSearchView.setQueryHint("Paste poll ID here");
+        mSearchView.setQueryHint(" Paste poll ID here");
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -260,5 +281,11 @@ public class MyPollActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void refresh () {
+
+        finish();
+        startActivity(new Intent(MyPollActivity.this, MyPollActivity.class));
     }
 }

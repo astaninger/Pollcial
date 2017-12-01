@@ -223,6 +223,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
                                             .Builder().setDisplayName(username).build();
                                     mFirebaseUser.updateProfile(update);
                                     startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                    finish();
                                 }
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -230,6 +231,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
                                 Toast.makeText(SignupActivity.this, "Sign up failed.",
                                         Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignupActivity.this, SignupActivity.class));
+                                finish();
                             }
                         }
                     });

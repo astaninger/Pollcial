@@ -247,12 +247,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Log.d("login", "signInWithEmail:success");
                                 //if signin successful, render discovery page
                                 startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
+                                finish();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("login", "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                                finish();
                             }
                         }
                     });
@@ -273,6 +275,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                             //if signin successful, render discovery page
                             startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("guestAccount", "signInAnonymously:failure", task.getException());
@@ -280,6 +283,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     Toast.LENGTH_SHORT).show();
 
                             startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                            finish();
                         }
                     }
                 });
@@ -463,6 +467,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_signup) {
             startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
