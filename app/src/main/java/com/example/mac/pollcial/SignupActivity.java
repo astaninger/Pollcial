@@ -73,6 +73,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mPasswordReenterView;
     private EditText mUsernameView;
     private View mProgressView;
     private View mLoginFormView;
@@ -89,6 +90,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
+        mPasswordReenterView = (EditText) findViewById(R.id.password_reenter);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -172,12 +174,15 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mPasswordReenterView.setError(null);
         mUsernameView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String password_reenter = mPasswordReenterView.getText().toString();
         final String username = mUsernameView.getText().toString();
+
 
         boolean cancel = false;
         View focusView = null;  
@@ -188,6 +193,15 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
             focusView = mPasswordView;
             cancel = true;
         }
+
+        // Check if passwords match
+        if (password.equals(password_reenter) == false) {
+            mPasswordReenterView.setError("Passwords don't match");
+            focusView = mPasswordReenterView;
+            cancel = true;
+        }
+
+
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
@@ -244,9 +258,12 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Check blocked for testing
-        return true; //password.length() > 4;
+        if (password.length() < 8) {
+            return false;
+        }
+        return true; //password.length() > 8;
     }
+
 
     /**
      * Shows the progress UI and hides the login form.
