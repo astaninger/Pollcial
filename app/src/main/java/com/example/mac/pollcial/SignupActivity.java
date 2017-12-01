@@ -180,7 +180,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         final String username = mUsernameView.getText().toString();
 
         boolean cancel = false;
-        View focusView = null;
+        View focusView = null;  
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
