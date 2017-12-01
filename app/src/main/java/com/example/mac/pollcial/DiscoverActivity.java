@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -45,8 +46,6 @@ public class DiscoverActivity extends AppCompatActivity
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
     private PollsAdapter mPollsAdapter;
-    private FirebaseUser user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,30 +93,11 @@ public class DiscoverActivity extends AppCompatActivity
 
         allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent viewPollIntent = new Intent(DiscoverActivity.this, ViewPollActivity.class);
-
-                SinglePoll currPoll = allPolls.get(position);
-                String timeAndAuthor = currPoll.getPollPostTime() + " by " + currPoll.getUserName();
-                // pass all info about current poll
-                viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
-                viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
-                viewPollIntent.putExtra("currNumVotes", Integer.toString(currPoll.getNumVote()));
-                viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
-                viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
-                viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
-                viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
-                viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
-                viewPollIntent.putExtra("currPollID", allPollIDs.get(position));
-                viewPollIntent.putExtra("currNumVoteA", Integer.toString(currPoll.getNumVoteA()));
-                viewPollIntent.putExtra("currNumVoteB", Integer.toString(currPoll.getNumVoteB()));
-                viewPollIntent.putExtra("currNumVoteC", Integer.toString(currPoll.getNumVoteC()));
-                viewPollIntent.putExtra("currNumVoteD", Integer.toString(currPoll.getNumVoteD()));
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 //TODO: Check if the user can edit.
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                String uid = user.getUid();
+                String uid = mFirebaseUser.getUid();
+                SinglePoll currPoll = allPolls.get(position);
                 if (uid == currPoll.getUid()){
 
                 }
@@ -125,7 +105,29 @@ public class DiscoverActivity extends AppCompatActivity
 
                 }
 
-                startActivity(viewPollIntent);
+                // check if user has already voted
+                DatabaseReference temp = mFirebaseDatabaseReference.child("users").child(uid).child("votes").child(allPollIDs.get(position));
+                temp.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String poll = dataSnapshot.getValue(String.class);
+                        if(poll == null) {
+                            // view poll if not voted
+                            viewPoll(position);
+                        }
+                        else {
+                            // view results if already voted
+                            startActivity(new Intent(DiscoverActivity.this, PollResultActivity.class));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("Discover", "loadPost:onCancelled", databaseError.toException());
+                    }
+                });
+
+
 
             }
         });
@@ -234,8 +236,7 @@ public class DiscoverActivity extends AppCompatActivity
                             viewPollIntent.putExtra("currPollID", dataSnapshot.getKey());
 
                             //TODO: Check if the user can edit.
-                            user = FirebaseAuth.getInstance().getCurrentUser();
-                            String uid = user.getUid();
+                            String uid = mFirebaseUser.getUid();
                             if (uid == currPoll.getUid()) {
 
                             } else {
@@ -322,8 +323,30 @@ public class DiscoverActivity extends AppCompatActivity
     }
 
     public void refresh () {
-
         finish();
         startActivity(new Intent(DiscoverActivity.this, DiscoverActivity.class));
+    }
+
+    private void viewPoll(int position) {
+        final Intent viewPollIntent = new Intent(DiscoverActivity.this, ViewPollActivity.class);
+
+        SinglePoll currPoll = allPolls.get(position);
+        String timeAndAuthor = currPoll.getPollPostTime() + " by " + currPoll.getUserName();
+        // pass all info about current poll
+        viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
+        viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
+        viewPollIntent.putExtra("currNumVotes", Integer.toString(currPoll.getNumVote()));
+        viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
+        viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
+        viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
+        viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
+        viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
+        viewPollIntent.putExtra("currPollID", allPollIDs.get(position));
+        viewPollIntent.putExtra("currNumVoteA", Integer.toString(currPoll.getNumVoteA()));
+        viewPollIntent.putExtra("currNumVoteB", Integer.toString(currPoll.getNumVoteB()));
+        viewPollIntent.putExtra("currNumVoteC", Integer.toString(currPoll.getNumVoteC()));
+        viewPollIntent.putExtra("currNumVoteD", Integer.toString(currPoll.getNumVoteD()));
+
+        startActivity(viewPollIntent);
     }
 }
