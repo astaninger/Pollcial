@@ -90,7 +90,7 @@ public class MyPollActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent viewPollIntent = new Intent(MyPollActivity.this, ViewPollActivity.class);
+                Intent viewPollIntent = new Intent(MyPollActivity.this, PollResultActivity.class);
 
                 SinglePoll currPoll = allPolls.get(position);
                 String timeAndAuthor = currPoll.getPollPostTime() + " by " + currPoll.getUserName();

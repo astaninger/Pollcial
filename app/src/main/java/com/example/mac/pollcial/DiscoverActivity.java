@@ -123,6 +123,9 @@ public class DiscoverActivity extends AppCompatActivity
                 }
                 else {
 
+                    //if user is the owner of poll, go to view result
+                    startActivity(new Intent(DiscoverActivity.this, PollResultActivity.class));
+                    return;
                 }
 
                 startActivity(viewPollIntent);
