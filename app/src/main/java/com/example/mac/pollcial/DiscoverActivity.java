@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.view.View;
@@ -86,40 +87,7 @@ public class DiscoverActivity extends AppCompatActivity
         }
 
 
-        ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
-
-
-        mPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
-
-        // connect ListView with the adapter
-        allPollsListView.setAdapter(mPollsAdapter);
-
-
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
-        mPollReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                allPolls.clear();
-                allPollIDs.clear();
-
-                for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
-                    // TODO: handle the post
-                    SinglePoll poll = pollSnapshot.getValue(SinglePoll.class);
-                    String pollID = pollSnapshot.getKey();
-                    allPolls.add(0, poll);
-                    allPollIDs.add(0,pollID); // <--- this is the ID list that has 1-to-1 relationship to allPolls
-
-                }
-                mPollsAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        ListView allPollsListView = getListView();
 
 
 
@@ -163,6 +131,44 @@ public class DiscoverActivity extends AppCompatActivity
         });
     }
 
+    @NonNull
+    private ListView getListView() {
+        ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
+
+
+        mPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
+
+        // connect ListView with the adapter
+        allPollsListView.setAdapter(mPollsAdapter);
+
+
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
+        mPollReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                allPolls.clear();
+                allPollIDs.clear();
+
+                for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
+                    // TODO: handle the post
+                    SinglePoll poll = pollSnapshot.getValue(SinglePoll.class);
+                    String pollID = pollSnapshot.getKey();
+                    allPolls.add(0, poll);
+                    allPollIDs.add(0,pollID); // <--- this is the ID list that has 1-to-1 relationship to allPolls
+
+                }
+                mPollsAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return allPollsListView;
+    }
 
 
     @Override

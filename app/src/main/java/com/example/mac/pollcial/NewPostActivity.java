@@ -125,7 +125,7 @@ public class NewPostActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        startActivity(new Intent(NewPostActivity.this, DiscoverActivity.class));
+        //startActivity(new Intent(NewPostActivity.this, DiscoverActivity.class));
         finish();
 
         return true;
