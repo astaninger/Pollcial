@@ -254,6 +254,19 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
 
     private boolean isEmailValid(String email) {
         //TODO: Check blocked for testing
+
+        //TODO: not sure what is considered a valid email.
+        
+        if(email.length() < 5) {
+            return false;
+        }
+        if(!email.contains("@")) {
+            return false;
+        }
+        if(!email.contains(".")) {
+            return false;
+        }
+
         return true; //email.contains("@");
     }
 
