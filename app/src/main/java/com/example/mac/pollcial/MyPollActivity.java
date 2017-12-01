@@ -3,6 +3,7 @@ package com.example.mac.pollcial;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.view.View;
@@ -83,47 +84,13 @@ public class MyPollActivity extends AppCompatActivity
             username.setText("Guest");
         }
 
-        ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
-
-
-        mPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
-
-        // connect ListView with the adapter
-        allPollsListView.setAdapter(mPollsAdapter);
-
-
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
-        mPollReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                allPolls.clear();
-
-                for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
-                    // TODO: handle the post
-                    SinglePoll poll = pollSnapshot.getValue(SinglePoll.class);
-
-                    user = FirebaseAuth.getInstance().getCurrentUser();
-                    String uid = user.getUid();
-                    if (uid.equals(poll.getUid())){
-                        allPolls.add(0,poll);
-                    }
-                }
-                mPollsAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        ListView allPollsListView = getListView();
 
         allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent viewPollIntent = new Intent(MyPollActivity.this, ViewPollActivity.class);
+                Intent viewPollIntent = new Intent(MyPollActivity.this, PollResultActivity.class);
 
                 SinglePoll currPoll = allPolls.get(position);
                 String timeAndAuthor = currPoll.getPollPostTime() + " by " + currPoll.getUserName();
@@ -172,6 +139,46 @@ public class MyPollActivity extends AppCompatActivity
             }
         });
         */
+    }
+
+    @NonNull
+    private ListView getListView() {
+        ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
+
+
+        mPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
+
+        // connect ListView with the adapter
+        allPollsListView.setAdapter(mPollsAdapter);
+
+
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
+        mPollReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                allPolls.clear();
+
+                for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
+                    // TODO: handle the post
+                    SinglePoll poll = pollSnapshot.getValue(SinglePoll.class);
+
+                    user = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = user.getUid();
+                    if (uid.equals(poll.getUid())){
+                        allPolls.add(0,poll);
+                    }
+                }
+                mPollsAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return allPollsListView;
     }
 
     @Override

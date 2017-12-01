@@ -23,13 +23,20 @@ import android.widget.Toast;
 import android.content.ClipboardManager;
 import android.content.ClipData;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class ViewPollActivity extends AppCompatActivity {
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
+    private DatabaseReference mPollReference;
+    private DatabaseReference mUserReference;
+    private DatabaseReference mVoteReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +92,12 @@ public class ViewPollActivity extends AppCompatActivity {
                 RadioButton selectedButton = findViewById(choiceID);
                 String selectedtext = selectedButton.getText().toString();
 
+                mFirebaseAuth = FirebaseAuth.getInstance();
+                mFirebaseUser = mFirebaseAuth.getCurrentUser();
                 mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
+                mPollReference = mFirebaseDatabaseReference.child("polls");
+                mUserReference = mFirebaseDatabaseReference.child("users");
+                mVoteReference = mUserReference.child(mFirebaseUser.getUid()).child("votes");
 
                 int currNumVote = Integer.parseInt(currNumVotes);
                 currNumVote++;
@@ -115,6 +126,9 @@ public class ViewPollActivity extends AppCompatActivity {
                     currNumVoted++;
                     mPollReference.child(currPollID).child("numVoteD").setValue(currNumVoted);
                 }
+
+                // add poll to user's list of polls voted on
+                mVoteReference.child(currPollID).setValue("true");
 
                 startActivity(new Intent(ViewPollActivity.this, PollResultActivity.class));
                 finish();
