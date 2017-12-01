@@ -43,8 +43,48 @@ public class PollsAdapter extends ArrayAdapter<SinglePoll> {
         TextView currPostTime = (TextView) convertView.findViewById(R.id.preview_time);
 
         // set the content to be displayed
-        currTitle.setText(currPoll.getPollTitle());
-        currDescription.setText(currPoll.getPollDecription());
+
+        // trim poll title a littl, to make sure it fit into one line
+        String pollTitle = currPoll.getPollTitle();
+        String previewPollTitle = "";
+
+        if (pollTitle.length() > 23) {
+            String[] splitedTitle = pollTitle.split(" ");
+            for (int i = 0; i < splitedTitle.length; i++) {
+                previewPollTitle += splitedTitle[i];
+                previewPollTitle += " ";
+                if (previewPollTitle.length() > 23) {
+                    break;
+                }
+            }
+
+            previewPollTitle += "...";
+        }
+        else {
+            previewPollTitle = pollTitle;
+        }
+
+        // trim poll description a little, to make sure it fit into one line
+        String pollDescription = currPoll.getPollDecription();
+        String previewPollDescription = "";
+
+        if(pollDescription.length() > 35) {
+            String[] splitedDescription = pollDescription.split(" ");
+            for (int i = 0; i < splitedDescription.length; i++) {
+                previewPollDescription += splitedDescription[i];
+                previewPollDescription += " ";
+                if (previewPollDescription.length() > 35) {
+                    break;
+                }
+            }
+
+            previewPollDescription += "...";
+        }
+        else {
+            previewPollDescription = pollDescription;
+        }
+        currTitle.setText(previewPollTitle);
+        currDescription.setText(previewPollDescription);
         currPostTime.setText(currPoll.getPollPostTime());
 
         return convertView;
