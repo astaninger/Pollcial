@@ -74,72 +74,91 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_choicea"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:text="TextView"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/txt_choicea_result"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:gravity="right"
                         android:text="TextView" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_choiceb"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:text="TextView"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/txt_choiceb_result"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:gravity="right"
                         android:text="TextView" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_choicec"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:text="TextView"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/txt_choicec_result"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:gravity="right"
                         android:text="TextView" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_choiced"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:text="TextView"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/txt_choiced_result"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                         android:gravity="right"
                         android:text="TextView" />
                 </LinearLayout>
@@ -159,6 +178,6 @@
         android:layout_marginHorizontal="8dp"
         android:layout_weight="1"
         android:background="@color/colorPrimary"
-        android:text="VOTE!"
+        android:text="GO BACK TO LIST"
         android:textColor="#ffffff" />
 </RelativeLayout>

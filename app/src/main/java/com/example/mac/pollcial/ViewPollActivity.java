@@ -116,6 +116,9 @@ public class ViewPollActivity extends AppCompatActivity {
                     mPollReference.child(currPollID).child("numVoteD").setValue(currNumVoted);
                 }
 
+                startActivity(new Intent(ViewPollActivity.this, PollResultActivity.class));
+                finish();
+                /*
                 Context context = getApplicationContext();
                 CharSequence text = "Vote received!";
                 int duration = Toast.LENGTH_SHORT;
@@ -123,6 +126,7 @@ public class ViewPollActivity extends AppCompatActivity {
                 toast.show();
 
                 startActivity(new Intent(ViewPollActivity.this, DiscoverActivity.class));
+                */
             }
         });
 
