@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -76,13 +77,22 @@ public class DiscoverActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
-        TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
+        final TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
 
-        if(mFirebaseUser.getDisplayName() != null) {
-            username.setText(mFirebaseUser.getDisplayName());
+        if(mFirebaseUser.isAnonymous()) {
+            username.setText("Guest");
         }
         else {
-            username.setText("Guest");
+            final String displayName = mFirebaseUser.getDisplayName();
+            if(displayName == null) {
+                mFirebaseUser.reload().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        username.setText(mFirebaseUser.getDisplayName());
+                    }
+                });
+            }
+            username.setText(displayName);
         }
 
 
@@ -187,13 +197,11 @@ public class DiscoverActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         TextView username = (TextView) header.findViewById(R.id.txt_nav_username);
-        if(mFirebaseUser.getDisplayName() != null) {
-
-            mFirebaseUser = mFirebaseAuth.getCurrentUser();
-            username.setText(mFirebaseUser.getDisplayName());
+        if(mFirebaseUser.isAnonymous()) {
+            username.setText("Guest");
         }
         else {
-            username.setText("Guest");
+            username.setText(mFirebaseUser.getDisplayName());
         }
     }
 
