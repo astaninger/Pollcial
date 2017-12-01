@@ -198,4 +198,5 @@
     <string name="title_activity_temp_view_poll">TempViewPollActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="title_activity_poll_result">PollResultActivity</string>
+    <string name="title_activity_view_poll_result">ViewPollResultActivity</string>
 </resources>
