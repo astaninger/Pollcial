@@ -105,7 +105,6 @@ public class ProfileActivity extends AppCompatActivity {
                 else {
                     //render a new activity here
                     startActivity(new Intent(ProfileActivity.this, ChangePasswordActivity.class));
-                    changePassword();
                 }
             }
         });
@@ -133,38 +132,6 @@ public class ProfileActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-    }
-
-
-    private void changePassword() {
-        // try to send password reset email
-        mFirebaseAuth.sendPasswordResetEmail(email)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // prepare toast
-                        Context context = getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
-
-                        // success
-                        if (task.isSuccessful()) {
-                            Log.d("sendResetEmail", "Email sent.");
-                            CharSequence successInfo = "An email containing password reset instruction has been sent to your email address.";
-
-                            Toast displaySuccess = Toast.makeText(context, successInfo, duration);
-                            displaySuccess.show();
-                        }
-                        else {
-                            // honestly shouldn't be able to fail but just in case
-                            Log.e("sendResetEmail", "Reset failed.");
-                            CharSequence failInfo = "Something went wrong.";
-
-                            Toast displayFail = Toast.makeText(context,  failInfo, duration);
-                            displayFail.show();
-                        }
-                    }
-                });
-
     }
 
     //this block clear focus when touch somewhere else
