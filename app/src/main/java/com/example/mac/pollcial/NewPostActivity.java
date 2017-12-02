@@ -161,8 +161,14 @@ public class NewPostActivity extends AppCompatActivity {
                 description = pollDescription.getText().toString();
                 choiceA = pollChoiceA.getText().toString();
                 choiceB = pollChoiceB.getText().toString();
+
                 choiceC = pollChoiceC.getText().toString();
                 choiceD = pollChoiceD.getText().toString();
+                // check if c is empty
+                if(choiceC.isEmpty() && !choiceD.isEmpty()) {
+                        choiceC = choiceD;
+                        choiceD = "";
+                }
                 numVote = 0;
                 numVoteA = 0;
                 numVoteB = 0;
