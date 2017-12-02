@@ -21,6 +21,7 @@ import android.support.v7.widget.SearchView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -85,6 +86,11 @@ public class MyPollActivity extends AppCompatActivity
         }
 
         ListView allPollsListView = getListView();
+
+        if(allPolls.isEmpty()) {
+            Toast.makeText(MyPollActivity.this, "You have no polls.",
+                    Toast.LENGTH_LONG).show();
+        }
 
         allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
