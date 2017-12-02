@@ -340,7 +340,14 @@ public class DiscoverActivity extends AppCompatActivity
         final Intent viewPollIntent = new Intent(DiscoverActivity.this, ViewPollActivity.class);
 
         SinglePoll currPoll = allPolls.get(position);
-        String timeAndAuthor = currPoll.getPollPostTime() + " by " + currPoll.getUserName();
+        String username;
+        if(currPoll.isAnonymous()) {
+            username = "Anonymous";
+        }
+        else {
+            username = currPoll.getUserName();
+        }
+        String timeAndAuthor = currPoll.getPollPostTime() + " by " +username;
         // pass all info about current poll
         viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
         viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
