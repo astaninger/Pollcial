@@ -14,10 +14,12 @@
             android:id="@+id/nav_my_poll"
             android:icon="@drawable/ic_poll_black_24px"
             android:title="My Polls" />
+        <!--
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_settings_black_24px"
             android:title="Setting" />
+          -->
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_power_settings_new_black_24px"

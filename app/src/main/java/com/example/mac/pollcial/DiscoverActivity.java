@@ -312,10 +312,10 @@ public class DiscoverActivity extends AppCompatActivity
             //render my poll activity
             startActivity(new Intent(DiscoverActivity.this, MyPollActivity.class));
 
-        } else if (id == R.id.nav_setting) {
+        /* } else if (id == R.id.nav_setting) {
 
             //render setting activity
-            startActivity(new Intent(DiscoverActivity.this, SettingsActivity.class));
+            startActivity(new Intent(DiscoverActivity.this, SettingsActivity.class)); */
 
         } else if (id == R.id.nav_logout) {
             startActivity(new Intent(DiscoverActivity.this, LoginActivity.class));
