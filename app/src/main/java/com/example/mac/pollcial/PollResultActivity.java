@@ -15,7 +15,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class PollResultActivity extends AppCompatActivity {
+
+    private DatabaseReference mFirebaseDatabaseReference;
+    private DatabaseReference mPollReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,13 @@ public class PollResultActivity extends AppCompatActivity {
         });
     }
 
+    private void deletePoll() {
+        String pollId = getIntent().getStringExtra("currPollID");
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mPollReference = mFirebaseDatabaseReference.child("polls");
+
+        mPollReference.child(pollId).removeValue();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu_search; this adds items to the action bar if it is present.
