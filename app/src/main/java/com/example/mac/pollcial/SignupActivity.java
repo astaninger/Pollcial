@@ -194,8 +194,24 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
             cancel = true;
         }
 
+        // Check if password field is filled
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check if confirm password field is filled
+        if (TextUtils.isEmpty(password_reenter)) {
+            mPasswordReenterView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordReenterView;
+            cancel = true;
+        }
+
+
         // Check if passwords match
-        if (password.equals(password_reenter) == false) {
+        if (!password.equals(password_reenter) && !TextUtils.isEmpty(password_reenter)
+                && !TextUtils.isEmpty(password)) {
             mPasswordReenterView.setError("Passwords don't match");
             focusView = mPasswordReenterView;
             cancel = true;
@@ -211,6 +227,13 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
+            cancel = true;
+        }
+
+        // Check if username field is filled
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
         }
 
