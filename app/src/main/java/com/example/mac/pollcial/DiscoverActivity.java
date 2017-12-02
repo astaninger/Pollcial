@@ -41,6 +41,8 @@ import com.google.firebase.database.ValueEventListener;
 public class DiscoverActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    final String TAG = "DiscoverActivity";
+
     ArrayList<SinglePoll> allPolls = new ArrayList<>();
     ArrayList<String> allPollIDs = new ArrayList<>();
     private FirebaseAuth mFirebaseAuth;
@@ -105,14 +107,10 @@ public class DiscoverActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                //TODO: Check if the user can edit.
+                //TODO: Check if the user can delete.
                 String uid = mFirebaseUser.getUid();
                 SinglePoll currPoll = allPolls.get(position);
-                if (uid == currPoll.getUid()){
-
-                }
-                else {
-
+                if(uid.equals(currPoll.getUid())){
                     //if user is the owner of poll, go to view result
                     startActivity(new Intent(DiscoverActivity.this, PollResultActivity.class));
                     return;
@@ -136,7 +134,7 @@ public class DiscoverActivity extends AppCompatActivity
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.w("Discover", "loadPost:onCancelled", databaseError.toException());
+                        Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                     }
                 });
 
