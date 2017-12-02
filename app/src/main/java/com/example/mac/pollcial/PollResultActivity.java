@@ -9,11 +9,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,11 +28,20 @@ public class PollResultActivity extends AppCompatActivity {
 
     private DatabaseReference mFirebaseDatabaseReference;
     private DatabaseReference mPollReference;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+
+    private String mPollUid;
+    private String mPollId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poll_result);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -41,18 +56,24 @@ public class PollResultActivity extends AppCompatActivity {
     }
 
     private void deletePoll() {
-        String pollId = getIntent().getStringExtra("currPollID");
+        String pollId = getIntent().getStringExtra("currPollId");
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mPollReference = mFirebaseDatabaseReference.child("polls");
-
         mPollReference.child(pollId).removeValue();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu_search; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_share, menu);
-        MenuItem item = menu.findItem(R.id.action_delete);
-        item.setVisible(true);
+
+        MenuItem delete = menu.findItem(R.id.action_delete);
+        String uid = mFirebaseUser.getUid();
+        String pollUid = getIntent().getStringExtra("currPollUid");
+        if(uid.equals(pollUid)) {
+            delete.setVisible(true);
+        }
+
         return true;
     }
 
@@ -75,6 +96,11 @@ public class PollResultActivity extends AppCompatActivity {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("label", currPollID);
             clipboard.setPrimaryClip(clip);
+            return true;
+        }
+        else if (id == R.id.action_delete) {
+            deletePoll();
+            startActivity(new Intent(PollResultActivity.this, DiscoverActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

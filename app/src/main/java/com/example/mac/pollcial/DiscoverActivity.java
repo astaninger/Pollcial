@@ -107,36 +107,40 @@ public class DiscoverActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                //TODO: Check if the user can delete.
+                // check if user is owner of poll
                 String uid = mFirebaseUser.getUid();
                 SinglePoll currPoll = allPolls.get(position);
+                // if user is owner of poll, go to results
                 if(uid.equals(currPoll.getUid())){
-                    //if user is the owner of poll, go to view result
-                    startActivity(new Intent(DiscoverActivity.this, PollResultActivity.class));
-                    return;
+                    Intent pollResultIntent = new Intent(DiscoverActivity.this, PollResultActivity.class);
+                    // pass in pollId and poll owner's uid for delete poll function
+                    pollResultIntent.putExtra("currPollId", allPollIDs.get(position));
+                    pollResultIntent.putExtra("currPollUid", currPoll.getUid());
+                    startActivity(pollResultIntent);
                 }
-
-                // check if user has already voted
-                DatabaseReference temp = mFirebaseDatabaseReference.child("users").child(uid).child("votes").child(allPollIDs.get(position));
-                temp.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String poll = dataSnapshot.getValue(String.class);
-                        if(poll == null) {
-                            // view poll if not voted
-                            viewPoll(position);
+                // if user is not owner, go to voting page, or go to results if already voted
+                else {
+                    // check if user has already voted
+                    DatabaseReference userVotesDatabaseReference = mFirebaseDatabaseReference.child("users").child(uid).child("votes").child(allPollIDs.get(position));
+                    userVotesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String poll = dataSnapshot.getValue(String.class);
+                            if (poll == null) {
+                                // view poll if not voted
+                                viewPoll(position);
+                            } else {
+                                // view results if already voted
+                                startActivity(new Intent(DiscoverActivity.this, PollResultActivity.class));
+                            }
                         }
-                        else {
-                            // view results if already voted
-                            startActivity(new Intent(DiscoverActivity.this, PollResultActivity.class));
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                        }
+                    });
+                }
 
 
 
@@ -329,11 +333,6 @@ public class DiscoverActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void refresh () {
-        finish();
-        startActivity(new Intent(DiscoverActivity.this, DiscoverActivity.class));
     }
 
     private void viewPoll(int position) {
