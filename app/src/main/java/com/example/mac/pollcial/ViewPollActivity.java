@@ -119,6 +119,7 @@ public class ViewPollActivity extends AppCompatActivity {
                             int choiceID = selectedGroup.getCheckedRadioButtonId();
                             RadioButton selectedButton = findViewById(choiceID);
                             int position = selectedGroup.indexOfChild(selectedButton);
+                            castVote(currPollID, position);
                         }
                     }
 
@@ -206,6 +207,7 @@ public class ViewPollActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void castVote(String currPollID, int position) {
         String voteChoice;
         switch(position) {
             case 0:
