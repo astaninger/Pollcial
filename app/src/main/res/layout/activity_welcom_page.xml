@@ -51,7 +51,7 @@
             android:background="@android:color/background_light"
             android:gravity="center"
             android:keepScreenOn="true"
-            android:text="A GREAT platform that help you make choices."
+            android:text="A GREAT platform that helps you make choices."
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
