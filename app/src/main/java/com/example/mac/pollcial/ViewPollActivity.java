@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -95,7 +96,7 @@ public class ViewPollActivity extends AppCompatActivity {
 
                 int choiceID = selectionGroup.getCheckedRadioButtonId();
                 RadioButton selectedButton = findViewById(choiceID);
-                String selectedtext = selectedButton.getText().toString();
+                final String selectedtext = selectedButton.getText().toString();
 
                 mFirebaseAuth = FirebaseAuth.getInstance();
                 mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -104,111 +105,25 @@ public class ViewPollActivity extends AppCompatActivity {
                 mUserReference = mFirebaseDatabaseReference.child("users");
                 mVoteReference = mUserReference.child(mFirebaseUser.getUid()).child("votes");
 
-               /*  int currNumVote = Integer.parseInt(currNumVotes);
-                currNumVote++;
-                mPollReference.child(currPollID).child("numVote").setValue(currNumVote);
-
-                if (selectedtext.equals(currChoiceA)) {
-                    int currNumVotea = Integer.parseInt(currNumVoteA);
-                    currNumVotea++;
-                    mPollReference.child(currPollID).child("numVoteA").setValue(currNumVotea);
-                }
-
-                if (selectedtext.equals(currChoiceB)) {
-                    int currNumVoteb = Integer.parseInt(currNumVoteB);
-                    currNumVoteb++;
-                    mPollReference.child(currPollID).child("numVoteB").setValue(currNumVoteb);
-                }
-
-                if (selectedtext.equals(currChoiceC)) {
-                    int currNumVotec = Integer.parseInt(currNumVoteC);
-                    currNumVotec++;
-                    mPollReference.child(currPollID).child("numVoteC").setValue(currNumVotec);
-                }
-
-                if (selectedtext.equals(currChoiceD)) {
-                    int currNumVoted = Integer.parseInt(currNumVoteD);
-                    currNumVoted++;
-                    mPollReference.child(currPollID).child("numVoteD").setValue(currNumVoted);
-                } */
-
-                String voteChoice;
-
-                switch(selectedtext) {
-                    case "a":
-                        voteChoice = "numVoteA";
-                        break;
-                    case "b":
-                        voteChoice = "numVoteB";
-                        break;
-                    case "c":
-                        voteChoice = "numVoteC";
-                        break;
-                    case "d":
-                        voteChoice = "numVoteD";
-                        break;
-                    default:
-                        voteChoice = "numVoteA";
-                        break;
-                }
-
-                // prevent concurrent voting issues
-                DatabaseReference votesRef = mPollReference.child(currPollID).child(voteChoice);
-                votesRef.runTransaction(new Transaction.Handler() {
+                // check if poll exists before voting
+                DatabaseReference pollReference = mPollReference.child(currPollID);
+                pollReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public Transaction.Result doTransaction(MutableData mutableData) {
-                        Integer currentValue = mutableData.getValue(Integer.class);
-                        if (currentValue == null) {
-                            mutableData.setValue(1);
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue(SinglePoll.class) == null) {
+                            Toast displayError = Toast.makeText(getApplicationContext(), "This poll no longer exists!", Toast.LENGTH_SHORT);
+                            displayError.show();
+                            finish();
                         } else {
-                            mutableData.setValue(currentValue + 1);
+                            castVote(currPollID, selectedtext);
                         }
-
-                        return Transaction.success(mutableData);
                     }
 
                     @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
-                        System.out.println("Transaction completed");
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("ViewPollActivity", "loadPost:onCancelled", databaseError.toException());
                     }
                 });
-
-                DatabaseReference totalVotesRef = mPollReference.child(currPollID).child("numVote");
-                totalVotesRef.runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(MutableData mutableData) {
-                        Integer currentValue = mutableData.getValue(Integer.class);
-                        if (currentValue == null) {
-                            mutableData.setValue(1);
-                        } else {
-                            mutableData.setValue(currentValue + 1);
-                        }
-
-                        return Transaction.success(mutableData);
-                    }
-
-                    @Override
-                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
-                        System.out.println("Transaction completed");
-                    }
-                });
-
-                // add poll to user's list of polls voted on
-                mVoteReference.child(currPollID).setValue("true");
-
-                Intent viewResultIntent = new Intent(ViewPollActivity.this, PollResultActivity.class);
-                viewResultIntent.putExtra("currPollId", currPollID);
-                startActivity(viewResultIntent);
-                finish();
-                /*
-                Context context = getApplicationContext();
-                CharSequence text = "Vote received!";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
-                startActivity(new Intent(ViewPollActivity.this, DiscoverActivity.class));
-                */
             }
         });
 
@@ -286,5 +201,84 @@ public class ViewPollActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void castVote(String currPollID, String selectedText) {
+        String voteChoice;
+        switch(selectedText) {
+            case "a":
+                voteChoice = "numVoteA";
+                break;
+            case "b":
+                voteChoice = "numVoteB";
+                break;
+            case "c":
+                voteChoice = "numVoteC";
+                break;
+            case "d":
+                voteChoice = "numVoteD";
+                break;
+            default:
+                voteChoice = "numVoteA";
+                break;
+        }
+
+        // prevent concurrent voting issues
+        DatabaseReference votesRef = mPollReference.child(currPollID).child(voteChoice);
+        votesRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Integer currentValue = mutableData.getValue(Integer.class);
+                if (currentValue == null) {
+                    mutableData.setValue(1);
+                } else {
+                    mutableData.setValue(currentValue + 1);
+                }
+
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                System.out.println("Transaction completed");
+            }
+        });
+
+        DatabaseReference totalVotesRef = mPollReference.child(currPollID).child("numVote");
+        totalVotesRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Integer currentValue = mutableData.getValue(Integer.class);
+                if (currentValue == null) {
+                    mutableData.setValue(1);
+                } else {
+                    mutableData.setValue(currentValue + 1);
+                }
+
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                System.out.println("Transaction completed");
+            }
+        });
+
+        // add poll to user's list of polls voted on
+        mVoteReference.child(currPollID).setValue("true");
+
+        Intent viewResultIntent = new Intent(ViewPollActivity.this, PollResultActivity.class);
+        viewResultIntent.putExtra("currPollId", currPollID);
+        startActivity(viewResultIntent);
+        finish();
+                /*
+                Context context = getApplicationContext();
+                CharSequence text = "Vote received!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+                startActivity(new Intent(ViewPollActivity.this, DiscoverActivity.class));
+                */
     }
 }
