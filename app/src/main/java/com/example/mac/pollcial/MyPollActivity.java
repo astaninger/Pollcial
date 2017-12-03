@@ -40,12 +40,12 @@ public class MyPollActivity extends AppCompatActivity
     final String TAG = "MyPollActivity";
 
     ArrayList<SinglePoll> allPolls = new ArrayList<>();
+    ArrayList<String> allPollIds = new ArrayList<>();
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mFirebaseDatabaseReference;
     private PollsAdapter mPollsAdapter;
-    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,36 +93,9 @@ public class MyPollActivity extends AppCompatActivity
         allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent viewPollIntent = new Intent(MyPollActivity.this, PollResultActivity.class);
-
-                SinglePoll currPoll = allPolls.get(position);
-                String timeAndAuthor = currPoll.getPollPostTime() + " by " + currPoll.getUserName();
-                // pass all info about current poll
-                viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
-                viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
-                viewPollIntent.putExtra("currNumVotes", Integer.toString(currPoll.getNumVote()));
-                viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
-                viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
-                viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
-                viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
-                viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
-
-                //TODO: Check if the user can edit.
-                /*
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                String uid = user.getUid();
-                if (uid == currPoll.getUid()){
-
-                }
-
-                else {
-
-                }
-                */
-
-                startActivity(viewPollIntent);
-
+                SinglePoll poll = allPolls.get(position);
+                String pollId = allPollIds.get(position);
+                viewResult(poll, pollId);
 
             }
         });
@@ -162,15 +135,16 @@ public class MyPollActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 allPolls.clear();
+                allPollIds.clear();
 
                 for (DataSnapshot pollSnapshot: dataSnapshot.getChildren()) {
                     // TODO: handle the post
+                    String uid = mFirebaseUser.getUid();
                     SinglePoll poll = pollSnapshot.getValue(SinglePoll.class);
-
-                    user = FirebaseAuth.getInstance().getCurrentUser();
-                    String uid = user.getUid();
                     if (uid.equals(poll.getUid())){
-                        allPolls.add(0,poll);
+                        String pollId = pollSnapshot.getKey();
+                        allPolls.add(0, poll);
+                        allPollIds.add(0, pollId);
                     }
                 }
 
@@ -229,7 +203,7 @@ public class MyPollActivity extends AppCompatActivity
         MenuItem item = menu.findItem(R.id.action_searching);
         SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(item);
 
-        mSearchView.setQueryHint(" Paste poll ID here");
+        mSearchView.setQueryHint("Paste poll ID here");
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
