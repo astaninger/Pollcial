@@ -40,6 +40,8 @@ public class PollResultActivity extends AppCompatActivity {
 
     private SinglePoll currPoll;
 
+
+
     String currPollTitle;
     String currPollAuthor;
     String currPollTime;
@@ -106,6 +108,13 @@ public class PollResultActivity extends AppCompatActivity {
                     currNumC = Integer.toString(currPoll.getNumVoteC());
                     currNumD = Integer.toString(currPoll.getNumVoteD());
 
+                    //calculate percentage
+                    int totalVotes = currPoll.getNumVote();
+                    int percentA = (int)((currPoll.getNumVoteA() * 100.0f) / totalVotes);
+                    int percentB = (int)((currPoll.getNumVoteB() * 100.0f) / totalVotes);
+                    int percentC = (int)((currPoll.getNumVoteC() * 100.0f) / totalVotes);
+                    int percentD = (int)((currPoll.getNumVoteD() * 100.0f) / totalVotes);
+
                     currView = findViewById(R.id.pollResultView);
 
                     TextView title = (TextView)currView.findViewById(R.id.txt_Title);
@@ -132,15 +141,15 @@ public class PollResultActivity extends AppCompatActivity {
                     time_n_author.setText(currPollTime + " by " + currPollAuthor);
                     numVote.setText("Total vote(s) made: " + currTotalNumVotes);
                     description.setText(currDescription);
-                    choiceA.setText(currChoiceA);
-                    choiceB.setText(currChoiceB);
-                    choiceC.setText(currChoiceC);
-                    choiceD.setText(currChoiceD);
+                    choiceA.setText("A. " + currChoiceA);
+                    choiceB.setText("B. " + currChoiceB);
+                    choiceC.setText("C. " + currChoiceC);
+                    choiceD.setText("D. " + currChoiceD);
 
-                    choiceARes.setText(currNumA + " vote(s)");
-                    choiceBRes.setText(currNumB + " vote(s)");
-                    choiceCRes.setText(currNumC + " vote(s)");
-                    choiceDRes.setText(currNumD + " vote(s)");
+                    choiceARes.setText(currNumA + " vote(s), " + percentA + "%");
+                    choiceBRes.setText(currNumB + " vote(s), " + percentB + "%");
+                    choiceCRes.setText(currNumC + " vote(s), " + percentC + "%");
+                    choiceDRes.setText(currNumD + " vote(s), " + percentD + "%");
                 }
             }
 
