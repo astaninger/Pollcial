@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,8 +26,12 @@ import android.content.ClipData;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 
 import java.util.ArrayList;
 
@@ -99,7 +104,7 @@ public class ViewPollActivity extends AppCompatActivity {
                 mUserReference = mFirebaseDatabaseReference.child("users");
                 mVoteReference = mUserReference.child(mFirebaseUser.getUid()).child("votes");
 
-                int currNumVote = Integer.parseInt(currNumVotes);
+               /*  int currNumVote = Integer.parseInt(currNumVotes);
                 currNumVote++;
                 mPollReference.child(currPollID).child("numVote").setValue(currNumVote);
 
@@ -125,7 +130,68 @@ public class ViewPollActivity extends AppCompatActivity {
                     int currNumVoted = Integer.parseInt(currNumVoteD);
                     currNumVoted++;
                     mPollReference.child(currPollID).child("numVoteD").setValue(currNumVoted);
+                } */
+
+                String voteChoice;
+
+                switch(selectedtext) {
+                    case "a":
+                        voteChoice = "numVoteA";
+                        break;
+                    case "b":
+                        voteChoice = "numVoteB";
+                        break;
+                    case "c":
+                        voteChoice = "numVoteC";
+                        break;
+                    case "d":
+                        voteChoice = "numVoteD";
+                        break;
+                    default:
+                        voteChoice = "numVoteA";
+                        break;
                 }
+
+                // prevent concurrent voting issues
+                DatabaseReference votesRef = mPollReference.child(currPollID).child(voteChoice);
+                votesRef.runTransaction(new Transaction.Handler() {
+                    @Override
+                    public Transaction.Result doTransaction(MutableData mutableData) {
+                        Integer currentValue = mutableData.getValue(Integer.class);
+                        if (currentValue == null) {
+                            mutableData.setValue(1);
+                        } else {
+                            mutableData.setValue(currentValue + 1);
+                        }
+
+                        return Transaction.success(mutableData);
+                    }
+
+                    @Override
+                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                        System.out.println("Transaction completed");
+                    }
+                });
+
+                DatabaseReference totalVotesRef = mPollReference.child(currPollID).child("numVote");
+                totalVotesRef.runTransaction(new Transaction.Handler() {
+                    @Override
+                    public Transaction.Result doTransaction(MutableData mutableData) {
+                        Integer currentValue = mutableData.getValue(Integer.class);
+                        if (currentValue == null) {
+                            mutableData.setValue(1);
+                        } else {
+                            mutableData.setValue(currentValue + 1);
+                        }
+
+                        return Transaction.success(mutableData);
+                    }
+
+                    @Override
+                    public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                        System.out.println("Transaction completed");
+                    }
+                });
 
                 // add poll to user's list of polls voted on
                 mVoteReference.child(currPollID).setValue("true");
