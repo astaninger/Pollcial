@@ -68,7 +68,7 @@ public class PollResultActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent trigerIntent = getIntent();
-        final String currPollID = trigerIntent.getStringExtra("currPollID");
+        final String currPollID = trigerIntent.getStringExtra("currPollId");
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls").child(currPollID);
@@ -76,9 +76,12 @@ public class PollResultActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    Log.d("PollResultActivity", "on data change");
                     currPoll = dataSnapshot.getValue(SinglePoll.class);
+                    Log.d("PollResultActivity", "currPoll key: " + dataSnapshot.getKey());
 
                     currPollTitle = currPoll.getPollTitle();
+                    Log.d("PollResultActivity", "poll title: " + currPollTitle);
                     currPollAuthor = currPoll.getUserName();
                     currPollTime = currPoll.getPollPostTime();
                     currTotalNumVotes = Integer.toString(currPoll.getNumVote());
@@ -92,6 +95,41 @@ public class PollResultActivity extends AppCompatActivity {
                     currNumC = Integer.toString(currPoll.getNumVoteC());
                     currNumD = Integer.toString(currPoll.getNumVoteD());
 
+                    currView = findViewById(R.id.pollResultView);
+
+                    TextView title = (TextView)currView.findViewById(R.id.txt_Title);
+                    TextView time_n_author = (TextView)currView.findViewById(R.id.txt_time_n_author);
+                    TextView numVote = (TextView)currView.findViewById(R.id.num_votes);
+                    TextView description = (TextView)currView.findViewById(R.id.txt_description);
+                    TextView choiceA = (TextView)currView.findViewById(R.id.txt_choicea);
+                    TextView choiceB = (TextView)currView.findViewById(R.id.txt_choiceb);
+                    TextView choiceC = (TextView)currView.findViewById(R.id.txt_choicec);
+                    TextView choiceD = (TextView)currView.findViewById(R.id.txt_choiced);
+
+                    TextView choiceARes = (TextView)currView.findViewById(R.id.txt_choicea_result);
+                    TextView choiceBRes = (TextView)currView.findViewById(R.id.txt_choiceb_result);
+                    TextView choiceCRes = (TextView)currView.findViewById(R.id.txt_choicec_result);
+                    TextView choiceDRes = (TextView)currView.findViewById(R.id.txt_choiced_result);
+
+                    //if the no choice C or D then do not display them
+                    if (currChoiceC.equals("")) choiceC.setVisibility(View.INVISIBLE);
+                    if (currChoiceD.equals("")) choiceD.setVisibility(View.INVISIBLE);
+                    if (currChoiceC.equals("")) choiceCRes.setVisibility(View.INVISIBLE);
+                    if (currChoiceD.equals("")) choiceDRes.setVisibility(View.INVISIBLE);
+
+                    title.setText(currPollTitle);
+                    time_n_author.setText(currPollTime + " by " + currPollAuthor);
+                    numVote.setText(currTotalNumVotes);
+                    description.setText(currDescription);
+                    choiceA.setText(currChoiceA);
+                    choiceB.setText(currChoiceB);
+                    choiceC.setText(currChoiceC);
+                    choiceD.setText(currChoiceD);
+
+                    choiceARes.setText(currNumA);
+                    choiceBRes.setText(currNumB);
+                    choiceCRes.setText(currNumC);
+                    choiceDRes.setText(currNumD);
                 }
             }
 
@@ -100,44 +138,6 @@ public class PollResultActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-        currView = this.findViewById(R.id.pollResultView);
-
-        TextView title = (TextView)currView.findViewById(R.id.txt_Title);
-        TextView time_n_author = (TextView)currView.findViewById(R.id.txt_time_n_author);
-        TextView numVote = (TextView)currView.findViewById(R.id.num_votes);
-        TextView description = (TextView)currView.findViewById(R.id.txt_description);
-        TextView choiceA = (TextView)currView.findViewById(R.id.txt_choicea);
-        TextView choiceB = (TextView)currView.findViewById(R.id.txt_choiceb);
-        TextView choiceC = (TextView)currView.findViewById(R.id.txt_choicec);
-        TextView choiceD = (TextView)currView.findViewById(R.id.txt_choiced);
-
-        TextView choiceARes = (TextView)currView.findViewById(R.id.txt_choicea_result);
-        TextView choiceBRes = (TextView)currView.findViewById(R.id.txt_choiceb_result);
-        TextView choiceCRes = (TextView)currView.findViewById(R.id.txt_choicec_result);
-        TextView choiceDRes = (TextView)currView.findViewById(R.id.txt_choiced_result);
-
-        //if the no choice C or D then do not display them
-  /*      if (currChoiceC.equals("")) choiceC.setVisibility(View.INVISIBLE);
-        if (currChoiceD.equals("")) choiceD.setVisibility(View.INVISIBLE);
-        if (currChoiceC.equals("")) choiceCRes.setVisibility(View.INVISIBLE);
-        if (currChoiceD.equals("")) choiceDRes.setVisibility(View.INVISIBLE); */
-
-        title.setText(currPollTitle);
-        time_n_author.setText(currPollTime + " by " + currPollAuthor);
-        numVote.setText(currTotalNumVotes);
-        description.setText(currDescription);
-        choiceA.setText(currChoiceA);
-        choiceB.setText(currChoiceB);
-        choiceC.setText(currChoiceC);
-        choiceD.setText(currChoiceD);
-
-        choiceARes.setText(currNumA);
-        choiceBRes.setText(currNumB);
-        choiceCRes.setText(currNumC);
-        choiceDRes.setText(currNumD);
 
         Button btnBack = (Button)findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {

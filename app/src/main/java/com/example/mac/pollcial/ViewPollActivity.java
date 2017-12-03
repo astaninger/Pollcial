@@ -196,7 +196,9 @@ public class ViewPollActivity extends AppCompatActivity {
                 // add poll to user's list of polls voted on
                 mVoteReference.child(currPollID).setValue("true");
 
-                startActivity(new Intent(ViewPollActivity.this, PollResultActivity.class));
+                Intent viewResultIntent = new Intent(ViewPollActivity.this, PollResultActivity.class);
+                viewResultIntent.putExtra("currPollId", currPollID);
+                startActivity(viewResultIntent);
                 finish();
                 /*
                 Context context = getApplicationContext();
