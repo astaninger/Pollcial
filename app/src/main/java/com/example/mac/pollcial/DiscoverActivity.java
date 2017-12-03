@@ -97,53 +97,13 @@ public class DiscoverActivity extends AppCompatActivity
             username.setText(displayName);
         }
 
-
         ListView allPollsListView = getListView();
-
-
-
-
         allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                // check if user is owner of poll
-                String uid = mFirebaseUser.getUid();
-                SinglePoll currPoll = allPolls.get(position);
-                // if user is owner of poll, go to results
-                if(uid.equals(currPoll.getUid())){
-                    Intent pollResultIntent = new Intent(DiscoverActivity.this, PollResultActivity.class);
-                    // pass in pollId and poll owner's uid for delete poll function
-                    pollResultIntent.putExtra("currPollId", allPollIDs.get(position));
-                    pollResultIntent.putExtra("currPollUid", currPoll.getUid());
-                    startActivity(pollResultIntent);
-                }
-                // if user is not owner, go to voting page, or go to results if already voted
-                else {
-                    // check if user has already voted
-                    DatabaseReference userVotesDatabaseReference = mFirebaseDatabaseReference.child("users").child(uid).child("votes").child(allPollIDs.get(position));
-                    userVotesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String poll = dataSnapshot.getValue(String.class);
-                            if (poll == null) {
-                                // view poll if not voted
-                                viewPoll(position);
-                            } else {
-                                // view results if already voted
-                                startActivity(new Intent(DiscoverActivity.this, PollResultActivity.class));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                        }
-                    });
-                }
-
-
-
+                final SinglePoll poll = allPolls.get(position);
+                final String pollId = allPollIDs.get(position);
+                openPoll(poll, pollId);
             }
         });
     }
@@ -151,13 +111,10 @@ public class DiscoverActivity extends AppCompatActivity
     @NonNull
     private ListView getListView() {
         ListView allPollsListView = (ListView)findViewById(R.id.polls_list);
-
-
         mPollsAdapter = new PollsAdapter(this, allPolls); // create an adapter
 
         // connect ListView with the adapter
         allPollsListView.setAdapter(mPollsAdapter);
-
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls");
@@ -176,7 +133,6 @@ public class DiscoverActivity extends AppCompatActivity
 
                 }
                 mPollsAdapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -224,7 +180,7 @@ public class DiscoverActivity extends AppCompatActivity
         MenuItem item = menu.findItem(R.id.action_searching);
         SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(item);
 
-        mSearchView.setQueryHint(" Paste poll ID here");
+        mSearchView.setQueryHint("Paste poll ID here");
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -236,26 +192,9 @@ public class DiscoverActivity extends AppCompatActivity
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()) {
-                            SinglePoll currPoll = dataSnapshot.getValue(SinglePoll.class);
-                            Intent viewPollIntent = new Intent(DiscoverActivity.this, ViewPollActivity.class);
-                            // pass all info about current poll
-                            viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
-                            viewPollIntent.putExtra("currNumVotes", Integer.toString(currPoll.getNumVote()));
-                            viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
-                            viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
-                            viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
-                            viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
-                            viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
-                            viewPollIntent.putExtra("currPollID", dataSnapshot.getKey());
-
-                            //TODO: Check if the user can edit.
-                            String uid = mFirebaseUser.getUid();
-                            if (uid == currPoll.getUid()) {
-
-                            } else {
-
-                            }
-                            startActivity(viewPollIntent);
+                            SinglePoll poll = dataSnapshot.getValue(SinglePoll.class);
+                            String pollId = dataSnapshot.getKey();
+                            openPoll(poll, pollId);
                         }
                         else
                         {
@@ -335,33 +274,89 @@ public class DiscoverActivity extends AppCompatActivity
         return true;
     }
 
-    private void viewPoll(int position) {
+    private void openPoll(final SinglePoll poll, final String pollId) {
+        // check if user is owner of poll
+        String uid = mFirebaseUser.getUid();
+        // if user is owner of poll, go to results
+        if(uid.equals(poll.getUid())) {
+            viewResult(poll, pollId);
+        }
+        // if user is not owner, go to voting page, or go to results if already voted
+        else {
+            // check if user has already voted
+            DatabaseReference userVotesDatabaseReference = mFirebaseDatabaseReference.child("users").child(uid).child("votes").child(pollId);
+            userVotesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String vote = dataSnapshot.getValue(String.class);
+                    if (vote == null) {
+                        // view poll if not voted
+                        viewPoll(poll, pollId);
+                    } else {
+                        // view results if already voted
+                        viewResult(poll, pollId);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                }
+            });
+        }
+    }
+
+    private void viewPoll(SinglePoll poll, String pollId) {
         final Intent viewPollIntent = new Intent(DiscoverActivity.this, ViewPollActivity.class);
 
-        SinglePoll currPoll = allPolls.get(position);
         String username;
-        if(currPoll.isAnonymous()) {
+        if(poll.isAnonymous()) {
             username = "Anonymous";
         }
         else {
-            username = currPoll.getUserName();
+            username = poll.getUserName();
         }
-        String timeAndAuthor = currPoll.getPollPostTime() + " by " +username;
+
+        String timeAndAuthor = poll.getPollPostTime() + " by " +username;
         // pass all info about current poll
-        viewPollIntent.putExtra("currTitle", currPoll.getPollTitle());
+        viewPollIntent.putExtra("currTitle", poll.getPollTitle());
         viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
-        viewPollIntent.putExtra("currNumVotes", Integer.toString(currPoll.getNumVote()));
-        viewPollIntent.putExtra("currDescription", currPoll.getPollDecription());
-        viewPollIntent.putExtra("currChoiceA", currPoll.getPollChoiceA());
-        viewPollIntent.putExtra("currChoiceB", currPoll.getPollChoiceB());
-        viewPollIntent.putExtra("currChoiceC", currPoll.getPollChoiceC());
-        viewPollIntent.putExtra("currChoiceD", currPoll.getPollChoiceD());
-        viewPollIntent.putExtra("currPollID", allPollIDs.get(position));
-        viewPollIntent.putExtra("currNumVoteA", Integer.toString(currPoll.getNumVoteA()));
-        viewPollIntent.putExtra("currNumVoteB", Integer.toString(currPoll.getNumVoteB()));
-        viewPollIntent.putExtra("currNumVoteC", Integer.toString(currPoll.getNumVoteC()));
-        viewPollIntent.putExtra("currNumVoteD", Integer.toString(currPoll.getNumVoteD()));
+        viewPollIntent.putExtra("currNumVotes", Integer.toString(poll.getNumVote()));
+        viewPollIntent.putExtra("currDescription", poll.getPollDecription());
+        viewPollIntent.putExtra("currChoiceA", poll.getPollChoiceA());
+        viewPollIntent.putExtra("currChoiceB", poll.getPollChoiceB());
+        viewPollIntent.putExtra("currChoiceC", poll.getPollChoiceC());
+        viewPollIntent.putExtra("currChoiceD", poll.getPollChoiceD());
+        viewPollIntent.putExtra("currPollID", pollId);
 
         startActivity(viewPollIntent);
+    }
+
+    private void viewResult(SinglePoll poll, String pollId) {
+        Intent viewResultIntent = new Intent(DiscoverActivity.this, PollResultActivity.class);
+
+        String username;
+        if(poll.isAnonymous()) {
+            username = "Anonymous";
+        }
+        else {
+            username = poll.getUserName();
+        }
+
+        String timeAndAuthor = poll.getPollPostTime() + " by " + username;
+        // pass all info about current poll
+        viewResultIntent.putExtra("currTitle", poll.getPollTitle());
+        viewResultIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
+        viewResultIntent.putExtra("currNumVotes", Integer.toString(poll.getNumVote()));
+        viewResultIntent.putExtra("currDescription", poll.getPollDecription());
+        viewResultIntent.putExtra("currNumVoteA", Integer.toString(poll.getNumVoteA()));
+        viewResultIntent.putExtra("currNumVoteB", Integer.toString(poll.getNumVoteB()));
+        viewResultIntent.putExtra("currNumVoteC", Integer.toString(poll.getNumVoteC()));
+        viewResultIntent.putExtra("currNumVoteD", Integer.toString(poll.getNumVoteD()));
+        // pass in pollId and poll owner's uid for delete poll function
+        viewResultIntent.putExtra("currPollId", pollId);
+        viewResultIntent.putExtra("currPollUid", poll.getUid());
+
+        startActivity(viewResultIntent);
     }
 }
