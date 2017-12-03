@@ -51,17 +51,24 @@ public class ProfileActivity extends AppCompatActivity {
             usernameText.setText(username);
         }
         else {
-            usernameText.setText("Guest");
+            TextView usernameGuestView= (TextView) findViewById(R.id.txt_profile_username_guest);
+            usernameGuestView.setVisibility(View.VISIBLE);
+
+            usernameText.setVisibility(View.GONE);
+
+            EditText saveUsernameBtn = (EditText) findViewById(R.id.btn_save_username_change);
+            saveUsernameBtn.setVisibility(View.GONE);
+
         }
 
         // fill in email
-        TextView password = (TextView) findViewById(R.id.txt_email);
+        TextView emailView = (TextView) findViewById(R.id.txt_email);
 
         if(email != null) {
-            password.setText(email);
+            emailView.setText(email);
         }
         else {
-            password.setText("Guest");
+            emailView.setText("Guest");
         }
 
         //this block adds a back button to the upper left of screen
