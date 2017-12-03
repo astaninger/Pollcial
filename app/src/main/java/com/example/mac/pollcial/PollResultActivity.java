@@ -119,7 +119,7 @@ public class PollResultActivity extends AppCompatActivity {
 
                     title.setText(currPollTitle);
                     time_n_author.setText(currPollTime + " by " + currPollAuthor);
-                    numVote.setText(currTotalNumVotes);
+                    numVote.setText("Total vote(s) made: " + currTotalNumVotes);
                     description.setText(currDescription);
                     choiceA.setText(currChoiceA);
                     choiceB.setText(currChoiceB);
