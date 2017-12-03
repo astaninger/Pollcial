@@ -14,15 +14,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class PollResultActivity extends AppCompatActivity {
 
@@ -34,6 +38,24 @@ public class PollResultActivity extends AppCompatActivity {
     private String mPollUid;
     private String mPollId;
 
+    private SinglePoll currPoll;
+
+    String currPollTitle;
+    String currPollAuthor;
+    String currPollTime;
+    String currTotalNumVotes;
+    String currDescription;
+    String currChoiceA;
+    String currChoiceB;
+    String currChoiceC;
+    String currChoiceD;
+    String currNumA;
+    String currNumB;
+    String currNumC;
+    String currNumD;
+
+    private View currView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +66,78 @@ public class PollResultActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent trigerIntent = getIntent();
+        final String currPollID = trigerIntent.getStringExtra("currPollID");
+
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls").child(currPollID);
+        mPollReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    currPoll = dataSnapshot.getValue(SinglePoll.class);
+
+                    currPollTitle = currPoll.getPollTitle();
+                    currPollAuthor = currPoll.getUserName();
+                    currPollTime = currPoll.getPollPostTime();
+                    currTotalNumVotes = Integer.toString(currPoll.getNumVote());
+                    currDescription = currPoll.getPollDecription();
+                    currChoiceA = currPoll.getPollChoiceA();
+                    currChoiceB = currPoll.getPollChoiceB();
+                    currChoiceC = currPoll.getPollChoiceC();
+                    currChoiceD = currPoll.getPollChoiceD();
+                    currNumA = Integer.toString(currPoll.getNumVoteA());
+                    currNumB = Integer.toString(currPoll.getNumVoteB());
+                    currNumC = Integer.toString(currPoll.getNumVoteC());
+                    currNumD = Integer.toString(currPoll.getNumVoteD());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        currView = this.findViewById(R.id.pollResultView);
+
+        TextView title = (TextView)currView.findViewById(R.id.txt_Title);
+        TextView time_n_author = (TextView)currView.findViewById(R.id.txt_time_n_author);
+        TextView numVote = (TextView)currView.findViewById(R.id.num_votes);
+        TextView description = (TextView)currView.findViewById(R.id.txt_description);
+        TextView choiceA = (TextView)currView.findViewById(R.id.txt_choicea);
+        TextView choiceB = (TextView)currView.findViewById(R.id.txt_choiceb);
+        TextView choiceC = (TextView)currView.findViewById(R.id.txt_choicec);
+        TextView choiceD = (TextView)currView.findViewById(R.id.txt_choiced);
+
+        TextView choiceARes = (TextView)currView.findViewById(R.id.txt_choicea_result);
+        TextView choiceBRes = (TextView)currView.findViewById(R.id.txt_choiceb_result);
+        TextView choiceCRes = (TextView)currView.findViewById(R.id.txt_choicec_result);
+        TextView choiceDRes = (TextView)currView.findViewById(R.id.txt_choiced_result);
+
+        //if the no choice C or D then do not display them
+  /*      if (currChoiceC.equals("")) choiceC.setVisibility(View.INVISIBLE);
+        if (currChoiceD.equals("")) choiceD.setVisibility(View.INVISIBLE);
+        if (currChoiceC.equals("")) choiceCRes.setVisibility(View.INVISIBLE);
+        if (currChoiceD.equals("")) choiceDRes.setVisibility(View.INVISIBLE); */
+
+        title.setText(currPollTitle);
+        time_n_author.setText(currPollTime + " by " + currPollAuthor);
+        numVote.setText(currTotalNumVotes);
+        description.setText(currDescription);
+        choiceA.setText(currChoiceA);
+        choiceB.setText(currChoiceB);
+        choiceC.setText(currChoiceC);
+        choiceD.setText(currChoiceD);
+
+        choiceARes.setText(currNumA);
+        choiceBRes.setText(currNumB);
+        choiceCRes.setText(currNumC);
+        choiceDRes.setText(currNumD);
 
         Button btnBack = (Button)findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
