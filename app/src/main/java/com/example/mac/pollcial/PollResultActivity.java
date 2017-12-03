@@ -126,10 +126,10 @@ public class PollResultActivity extends AppCompatActivity {
                     choiceC.setText(currChoiceC);
                     choiceD.setText(currChoiceD);
 
-                    choiceARes.setText(currNumA);
-                    choiceBRes.setText(currNumB);
-                    choiceCRes.setText(currNumC);
-                    choiceDRes.setText(currNumD);
+                    choiceARes.setText(currNumA + " vote(s)");
+                    choiceBRes.setText(currNumB + " vote(s)");
+                    choiceCRes.setText(currNumC + " vote(s)");
+                    choiceDRes.setText(currNumD + " vote(s)");
                 }
             }
 
