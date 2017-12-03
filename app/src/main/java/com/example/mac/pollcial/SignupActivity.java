@@ -230,9 +230,24 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
             cancel = true;
         }
 
-        // Check if username field is filled
+        // Check if username field is valid
         if (TextUtils.isEmpty(username)) {
             mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
+        }
+        else if (username.length() > 15) {
+            mUsernameView.setError("Username should be longer than 16 characters");
+            focusView = mUsernameView;
+            cancel = true;
+        }
+        else if (username.length() < 4) {
+            mUsernameView.setError("Username should be shorter than 3 characters");
+            focusView = mUsernameView;
+            cancel = true;
+        }
+        else if (username.contains(" ")) {
+            mUsernameView.setError("Username should contain no spaces");
             focusView = mUsernameView;
             cancel = true;
         }
