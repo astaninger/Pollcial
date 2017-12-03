@@ -228,7 +228,8 @@ public class PollResultActivity extends AppCompatActivity {
         }
         else if (id == R.id.action_delete) {
             deletePoll();
-            startActivity(new Intent(PollResultActivity.this, DiscoverActivity.class));
+            finish();
+            //startActivity(new Intent(PollResultActivity.this, DiscoverActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
