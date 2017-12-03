@@ -63,6 +63,13 @@
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginVertical="8dp"
+                android:background="@android:color/darker_gray" />
+
             <RadioGroup
                 android:id="@+id/choice"
                 android:layout_width="match_parent"
@@ -75,6 +82,7 @@
                     android:id="@+id/rdb_choice_a"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:layout_weight="1"
                     android:text="Ramen"
                     android:textSize="18sp" />
@@ -83,6 +91,7 @@
                     android:id="@+id/rdb_choice_b"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
                     android:layout_weight="1"
                     android:text="Chinese Food"
                     android:textSize="18sp" />
@@ -91,6 +100,7 @@
                     android:id="@+id/rdb_choice_c"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
                     android:layout_weight="1"
                     android:text="Mexican Food"
                     android:textSize="18sp" />
@@ -99,6 +109,7 @@
                     android:id="@+id/rdb_choice_d"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
                     android:layout_weight="1"
                     android:text="Price Center"
                     android:textSize="18sp" />

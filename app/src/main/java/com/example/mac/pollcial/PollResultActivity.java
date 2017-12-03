@@ -139,12 +139,12 @@ public class PollResultActivity extends AppCompatActivity {
                     TextView dTitle = (TextView)currView.findViewById(R.id.txt_d);
 
                     //if the no choice C or D then do not display them
-                    if (currChoiceC.equals("")) choiceC.setVisibility(View.INVISIBLE);
-                    if (currChoiceD.equals("")) choiceD.setVisibility(View.INVISIBLE);
-                    if (currChoiceC.equals("")) choiceCRes.setVisibility(View.INVISIBLE);
-                    if (currChoiceD.equals("")) choiceDRes.setVisibility(View.INVISIBLE);
-                    if (currChoiceC.equals("")) cTitle.setVisibility(View.INVISIBLE);
-                    if (currChoiceD.equals("")) dTitle.setVisibility(View.INVISIBLE);
+                    if (currChoiceC.equals("")) choiceC.setVisibility(View.GONE);
+                    if (currChoiceD.equals("")) choiceD.setVisibility(View.GONE);
+                    if (currChoiceC.equals("")) choiceCRes.setVisibility(View.GONE);
+                    if (currChoiceD.equals("")) choiceDRes.setVisibility(View.GONE);
+                    if (currChoiceC.equals("")) cTitle.setVisibility(View.GONE);
+                    if (currChoiceD.equals("")) dTitle.setVisibility(View.GONE);
 
                     title.setText(currPollTitle);
                     time_n_author.setText(currPollTime + " by " + currPollAuthor);
