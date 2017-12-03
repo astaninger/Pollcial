@@ -90,11 +90,6 @@ public class MyPollActivity extends AppCompatActivity
 
         ListView allPollsListView = getListView();
 
-        if(allPolls.isEmpty()) {
-            Toast.makeText(MyPollActivity.this, "You have no polls.",
-                    Toast.LENGTH_LONG).show();
-        }
-
         allPollsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -178,6 +173,12 @@ public class MyPollActivity extends AppCompatActivity
                         allPolls.add(0,poll);
                     }
                 }
+
+                if(allPolls.isEmpty()) {
+                    Toast.makeText(MyPollActivity.this, "You have no polls.",
+                            Toast.LENGTH_LONG).show();
+                }
+
                 mPollsAdapter.notifyDataSetChanged();
 
             }
