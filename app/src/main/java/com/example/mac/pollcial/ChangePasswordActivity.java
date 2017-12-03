@@ -35,8 +35,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private final int EMPTY_FIELD = 0;
     private final CharSequence EMPTY_FIELD_STR = "One or more fields is empty.";
     private final int NOT_MATCHING = 1;
-    private final CharSequence NOT_MATCHING_STR = "Your new password does not match both times.";
-    private final int NO_ERROR = 2;
+    private final CharSequence NOT_MATCHING_STR = "Your second entry does not match the first.";
+    private final int TOO_SHORT = 2;
+    private final CharSequence TOO_SHORT_STR = "Your new password is too short.";
+    private final int NO_ERROR = 3;
+    private final CharSequence WRONG_PASSWORD = "Your password is incorrect.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +91,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 return;
         }
 
-        String oldPassword = oldPasswordText.getText().toString();
-        String newPassword = newPasswordText.getText().toString();
+        final String oldPassword = oldPasswordText.getText().toString();
+        final String newPassword = newPasswordText.getText().toString();
 
         // reauthenticate
         AuthCredential credential = EmailAuthProvider.getCredential(email, oldPassword);
@@ -99,34 +102,37 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
                             Log.d("Re-authenticate", "User re-authenticated.");
+
+                            // try to update pass
+                            mFirebaseUser.updatePassword(newPassword)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("Change password", "User password updated.");
+                                                Toast displaySuccess = Toast.makeText(getApplicationContext(), "Password successfully updated!", Toast.LENGTH_SHORT);
+                                                displaySuccess.show();
+
+                                                // go back to my profile
+                                                startActivity(new Intent(ChangePasswordActivity.this, ProfileActivity.class));
+                                            }
+                                            else {
+                                                Log.e("Change password", "User password change failed.");
+                                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_SHORT);
+                                            }
+                                        }
+                                    });
                         }
                         else {
                             Log.e("Re-authenticate", "User could not be re-authenticated.");
-                            Toast displayError = Toast.makeText(getApplicationContext(), "Incorrect password.", Toast.LENGTH_SHORT);
-                            displayError.show();
-
-                            return;
+                            EditText oldPasswordText = (EditText) findViewById(R.id.txt_old_password);
+                            oldPasswordText.setError(WRONG_PASSWORD);
+                            oldPasswordText.requestFocus();
                         }
                     }
                 });
 
-        // try to update pass
-        mFirebaseUser.updatePassword(newPassword)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("Change password", "User password updated.");
-                            Toast displaySuccess = Toast.makeText(getApplicationContext(), "Password successfully updated!", Toast.LENGTH_SHORT);
-                            displaySuccess.show();
-                        }
-                        else {
-                            Log.e("Change password", "User password change failed.");
-                            Toast displayError = Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT);
-                            displayError.show();
-                        }
-                    }
-                });
+
     }
 
     // check if password fields are valid
@@ -138,34 +144,50 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         // check empty
         boolean empty = false;
-        if(TextUtils.isEmpty(oldPassword)) {
-            oldPasswordText.setError(getString(R.string.error_field_required));
+        if(TextUtils.isEmpty(newPasswordRe)) {
+            newPasswordReText.setError(getString(R.string.error_field_required));
+            newPasswordReText.requestFocus();
             empty = true;
         }
         if(TextUtils.isEmpty(newPassword)) {
             newPasswordText.setError(getString(R.string.error_field_required));
+            newPasswordText.requestFocus();
+
             empty = true;
         }
-        if(TextUtils.isEmpty(newPasswordRe)) {
-            newPasswordReText.setError(getString(R.string.error_field_required));
+        if(TextUtils.isEmpty(oldPassword)) {
+            oldPasswordText.setError(getString(R.string.error_field_required));
+            oldPasswordText.requestFocus();
+
             empty = true;
         }
         if(empty) {
-            Toast displayError = Toast.makeText(getApplicationContext(), EMPTY_FIELD_STR, Toast.LENGTH_SHORT);
-            displayError.show();
-
             return EMPTY_FIELD;
         }
 
+        if(!isPasswordValid(newPassword)) {
+            newPasswordText.setError(TOO_SHORT_STR);
+            newPasswordText.requestFocus();
+
+            return TOO_SHORT;
+        }
         if(!newPassword.equals(newPasswordRe)) {
-            Toast displayError = Toast.makeText(getApplicationContext(), NOT_MATCHING_STR, Toast.LENGTH_SHORT);
-            displayError.show();
+            newPasswordReText.setError(NOT_MATCHING_STR);
+            newPasswordReText.requestFocus();
 
             return NOT_MATCHING;
         }
 
         return NO_ERROR;
     }
+
+    private boolean isPasswordValid(String password) {
+        if (password.length() < 8) {
+            return false;
+        }
+        return true; //password.length() > 8;
+    }
+
     //this block clear focus when touch somewhere else
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
