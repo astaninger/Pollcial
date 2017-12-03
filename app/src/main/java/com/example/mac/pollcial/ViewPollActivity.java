@@ -271,14 +271,6 @@ public class ViewPollActivity extends AppCompatActivity {
         viewResultIntent.putExtra("currPollId", currPollID);
         startActivity(viewResultIntent);
         finish();
-                /*
-                Context context = getApplicationContext();
-                CharSequence text = "Vote received!";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
 
-                startActivity(new Intent(ViewPollActivity.this, DiscoverActivity.class));
-                */
     }
 }

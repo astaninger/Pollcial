@@ -56,6 +56,8 @@ public class PollResultActivity extends AppCompatActivity {
     String currNumC;
     String currNumD;
 
+    String pollID;
+
     private View currView;
 
     @Override
@@ -82,6 +84,8 @@ public class PollResultActivity extends AppCompatActivity {
 
         Intent trigerIntent = getIntent();
         final String currPollID = trigerIntent.getStringExtra("currPollId");
+        pollID = currPollID;
+
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls").child(currPollID);
@@ -218,7 +222,7 @@ public class PollResultActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "The poll ID saved. Paste this into the search bar to open the poll",
                     Toast.LENGTH_LONG).show();
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("label", currPollID);
+            ClipData clip = ClipData.newPlainText("label", pollID);
             clipboard.setPrimaryClip(clip);
             return true;
         }
@@ -229,4 +233,7 @@ public class PollResultActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }
