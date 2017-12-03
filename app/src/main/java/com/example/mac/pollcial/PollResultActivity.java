@@ -131,20 +131,25 @@ public class PollResultActivity extends AppCompatActivity {
                     TextView choiceCRes = (TextView)currView.findViewById(R.id.txt_choicec_result);
                     TextView choiceDRes = (TextView)currView.findViewById(R.id.txt_choiced_result);
 
+                    TextView cTitle = (TextView)currView.findViewById(R.id.txt_c);
+                    TextView dTitle = (TextView)currView.findViewById(R.id.txt_d);
+
                     //if the no choice C or D then do not display them
                     if (currChoiceC.equals("")) choiceC.setVisibility(View.INVISIBLE);
                     if (currChoiceD.equals("")) choiceD.setVisibility(View.INVISIBLE);
                     if (currChoiceC.equals("")) choiceCRes.setVisibility(View.INVISIBLE);
                     if (currChoiceD.equals("")) choiceDRes.setVisibility(View.INVISIBLE);
+                    if (currChoiceC.equals("")) cTitle.setVisibility(View.INVISIBLE);
+                    if (currChoiceD.equals("")) dTitle.setVisibility(View.INVISIBLE);
 
                     title.setText(currPollTitle);
                     time_n_author.setText(currPollTime + " by " + currPollAuthor);
                     numVote.setText("Total vote(s) made: " + currTotalNumVotes);
                     description.setText(currDescription);
-                    choiceA.setText("A. " + currChoiceA);
-                    choiceB.setText("B. " + currChoiceB);
-                    choiceC.setText("C. " + currChoiceC);
-                    choiceD.setText("D. " + currChoiceD);
+                    choiceA.setText(currChoiceA);
+                    choiceB.setText(currChoiceB);
+                    choiceC.setText(currChoiceC);
+                    choiceD.setText(currChoiceD);
 
                     choiceARes.setText(currNumA + " vote(s), " + percentA + "%");
                     choiceBRes.setText(currNumB + " vote(s), " + percentB + "%");
