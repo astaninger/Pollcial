@@ -96,7 +96,7 @@ public class ViewPollActivity extends AppCompatActivity {
 
                 int choiceID = selectionGroup.getCheckedRadioButtonId();
                 RadioButton selectedButton = findViewById(choiceID);
-                final String selectedtext = selectedButton.getText().toString();
+                //final String selectedtext = selectedButton.getText().toString();
 
                 mFirebaseAuth = FirebaseAuth.getInstance();
                 mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -115,7 +115,11 @@ public class ViewPollActivity extends AppCompatActivity {
                             displayError.show();
                             finish();
                         } else {
-                            castVote(currPollID, selectedtext);
+                            RadioGroup selectedGroup = findViewById(R.id.choice);
+                            int choiceID = selectedGroup.getCheckedRadioButtonId();
+                            RadioButton selectedButton = findViewById(choiceID);
+                            int position = selectedGroup.indexOfChild(selectedButton);
+                            castVote(currPollID, position);
                         }
                     }
 
@@ -203,19 +207,19 @@ public class ViewPollActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void castVote(String currPollID, String selectedText) {
+    private void castVote(String currPollID, int position) {
         String voteChoice;
-        switch(selectedText) {
-            case "a":
+        switch(position) {
+            case 0:
                 voteChoice = "numVoteA";
                 break;
-            case "b":
+            case 1:
                 voteChoice = "numVoteB";
                 break;
-            case "c":
+            case 2:
                 voteChoice = "numVoteC";
                 break;
-            case "d":
+            case 3:
                 voteChoice = "numVoteD";
                 break;
             default:
