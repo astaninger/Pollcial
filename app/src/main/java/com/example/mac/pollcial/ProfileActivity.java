@@ -112,6 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
                 else {
                     //render a new activity here
                     startActivity(new Intent(ProfileActivity.this, ChangePasswordActivity.class));
+                    finish();
                 }
             }
         });

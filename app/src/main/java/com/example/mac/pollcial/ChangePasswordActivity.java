@@ -113,8 +113,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                                 Toast displaySuccess = Toast.makeText(getApplicationContext(), "Password successfully updated!", Toast.LENGTH_SHORT);
                                                 displaySuccess.show();
 
-                                                // go back to my profile
-                                                startActivity(new Intent(ChangePasswordActivity.this, ProfileActivity.class));
+                                                // go back to previous page
+                                                //startActivity(new Intent(ChangePasswordActivity.this, ProfileActivity.class));
+                                                finish();
                                             }
                                             else {
                                                 Log.e("Change password", "User password change failed.");
