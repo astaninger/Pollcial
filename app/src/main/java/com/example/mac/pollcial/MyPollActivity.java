@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
 
 public class MyPollActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    final String TAG = "MyPollActivity";
 
     ArrayList<SinglePoll> allPolls = new ArrayList<>();
 
@@ -230,6 +233,31 @@ public class MyPollActivity extends AppCompatActivity
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference mPollReference = mFirebaseDatabaseReference.child("polls").child(query);
+                mPollReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            SinglePoll poll = dataSnapshot.getValue(SinglePoll.class);
+                            String pollId = dataSnapshot.getKey();
+                            openPoll(poll, pollId);
+                        }
+                        else
+                        {
+                            Toast.makeText(MyPollActivity.this, "PollID does not exist.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 return false;
             }
 
@@ -300,5 +328,91 @@ public class MyPollActivity extends AppCompatActivity
 
         finish();
         startActivity(new Intent(MyPollActivity.this, MyPollActivity.class));
+    }
+
+    private void openPoll(final SinglePoll poll, final String pollId) {
+        // check if user is owner of poll
+        String uid = mFirebaseUser.getUid();
+        // if user is owner of poll, go to results
+        if(uid.equals(poll.getUid())) {
+            viewResult(poll, pollId);
+        }
+        // if user is not owner, go to voting page, or go to results if already voted
+        else {
+            // check if user has already voted
+            DatabaseReference userVotesDatabaseReference = mFirebaseDatabaseReference.child("users").child(uid).child("votes").child(pollId);
+            userVotesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String vote = dataSnapshot.getValue(String.class);
+                    if (vote == null) {
+                        // view poll if not voted
+                        viewPoll(poll, pollId);
+                    } else {
+                        // view results if already voted
+                        viewResult(poll, pollId);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                }
+            });
+        }
+    }
+
+    private void viewPoll(SinglePoll poll, String pollId) {
+        final Intent viewPollIntent = new Intent(MyPollActivity.this, ViewPollActivity.class);
+
+        String username;
+        if(poll.isAnonymous()) {
+            username = "Anonymous";
+        }
+        else {
+            username = poll.getUserName();
+        }
+
+        String timeAndAuthor = poll.getPollPostTime() + " by " +username;
+        // pass all info about current poll
+        viewPollIntent.putExtra("currTitle", poll.getPollTitle());
+        viewPollIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
+        viewPollIntent.putExtra("currNumVotes", Integer.toString(poll.getNumVote()));
+        viewPollIntent.putExtra("currDescription", poll.getPollDecription());
+        viewPollIntent.putExtra("currChoiceA", poll.getPollChoiceA());
+        viewPollIntent.putExtra("currChoiceB", poll.getPollChoiceB());
+        viewPollIntent.putExtra("currChoiceC", poll.getPollChoiceC());
+        viewPollIntent.putExtra("currChoiceD", poll.getPollChoiceD());
+        viewPollIntent.putExtra("currPollID", pollId);
+
+        startActivity(viewPollIntent);
+    }
+
+    private void viewResult(SinglePoll poll, String pollId) {
+        Intent viewResultIntent = new Intent(MyPollActivity.this, PollResultActivity.class);
+
+        String username;
+        if(poll.isAnonymous()) {
+            username = "Anonymous";
+        }
+        else {
+            username = poll.getUserName();
+        }
+
+        String timeAndAuthor = poll.getPollPostTime() + " by " + username;
+        // pass all info about current poll
+        viewResultIntent.putExtra("currTitle", poll.getPollTitle());
+        viewResultIntent.putExtra("currPostTimeAndAuthor", timeAndAuthor);
+        viewResultIntent.putExtra("currNumVotes", Integer.toString(poll.getNumVote()));
+        viewResultIntent.putExtra("currDescription", poll.getPollDecription());
+        viewResultIntent.putExtra("currNumVoteA", Integer.toString(poll.getNumVoteA()));
+        viewResultIntent.putExtra("currNumVoteB", Integer.toString(poll.getNumVoteB()));
+        viewResultIntent.putExtra("currNumVoteC", Integer.toString(poll.getNumVoteC()));
+        viewResultIntent.putExtra("currNumVoteD", Integer.toString(poll.getNumVoteD()));
+        // pass in pollId and poll owner's uid for delete poll function
+        viewResultIntent.putExtra("currPollId", pollId);
+        viewResultIntent.putExtra("currPollUid", poll.getUid());
+
+        startActivity(viewResultIntent);
     }
 }
