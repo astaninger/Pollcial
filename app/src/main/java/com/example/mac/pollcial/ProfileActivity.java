@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -122,24 +123,29 @@ public class ProfileActivity extends AppCompatActivity {
         EditText usernameText = (EditText) findViewById(R.id.txt_profile_username);
         String newUsername = usernameText.getText().toString();
 
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(newUsername).build();
+        if(TextUtils.isEmpty(newUsername)) {
+            usernameText.setError(getString(R.string.error_field_required));
+        }
+        else {
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(newUsername).build();
 
-        mFirebaseUser.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("Update username", "User profile updated.");
+            mFirebaseUser.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("Update username", "User profile updated.");
+                            }
                         }
-                    }
-                });
+                    });
 
-        Context context = getApplicationContext();
-        CharSequence text = "Name change saved";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+            Context context = getApplicationContext();
+            CharSequence text = "Name change saved";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     //this block clear focus when touch somewhere else

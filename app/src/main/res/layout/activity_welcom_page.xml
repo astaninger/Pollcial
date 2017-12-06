@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,27 +13,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@android:dimen/app_icon_size"
         android:orientation="vertical"
         android:weightSum="1">
 
-        <TextView
-            android:id="@+id/textView3"
+        <ImageView
+            android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.38"
-            android:background="@android:color/background_light"
-            android:gravity="bottom|center"
-            android:text="Pollcial"
-            android:textColor="@color/colorPrimary"
-            android:textSize="60sp"
-            android:textStyle="bold" />
+            android:layout_weight="0.4"
+            app:srcCompat="@mipmap/ic_welcome_foreground" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_weight="0.09"
+            android:layout_weight="0.2"
             android:background="@android:color/background_light"
             android:gravity="top|right"
             android:text="by Team JERRY"
@@ -44,27 +41,16 @@
             android:id="@+id/fullscreen_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@android:dimen/app_icon_size"
-            android:layout_marginLeft="@android:dimen/app_icon_size"
-            android:layout_marginRight="@android:dimen/app_icon_size"
-            android:layout_weight="0.37"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
             android:background="@android:color/background_light"
+            android:fontFamily="@font/abeezee"
             android:gravity="center"
             android:keepScreenOn="true"
             android:text="Polling made social."
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/background_light"
-            android:gravity="right"
-            android:text="Alpha 0.1"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="16sp" />
 
     </LinearLayout>
 
