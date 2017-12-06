@@ -65,8 +65,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                     Toast displayError = Toast.makeText(context, noEmailInfo, duration);
                     displayError.show();
 
-                    View focusView = emailEditText;
-                    focusView.requestFocus();
+                    emailEditText.requestFocus();
                 }
                 else {
                     // send email
@@ -94,10 +93,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                     } else {
                                         Log.e("sendResetEmail", "Email not found");
 
-                                        CharSequence failInfo = "The email could not be found.";
-
-                                        Toast displayFail = Toast.makeText(context, failInfo, duration);
-                                        displayFail.show();
+                                        emailEditText.setError("The email could not be found.");
+                                        emailEditText.requestFocus();
                                     }
                                 }
                             });
