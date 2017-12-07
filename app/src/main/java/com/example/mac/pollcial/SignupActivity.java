@@ -88,7 +88,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        //populateAutoComplete();
 
         mPasswordReenterView = (EditText) findViewById(R.id.password_reenter);
         mPasswordView = (EditText) findViewById(R.id.password);
