@@ -208,11 +208,10 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
             cancel = true;
         }
 
-
         // Check if passwords match
         if (!password.equals(password_reenter) && !TextUtils.isEmpty(password_reenter)
                 && !TextUtils.isEmpty(password)) {
-            mPasswordReenterView.setError("Passwords don't match");
+            mPasswordReenterView.setError(getString(R.string.error_password_match));
             focusView = mPasswordReenterView;
             cancel = true;
         }
@@ -237,17 +236,17 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
             cancel = true;
         }
         else if (username.length() > 15) {
-            mUsernameView.setError("Username should be longer than 16 characters");
+            mUsernameView.setError(getString(R.string.error_username_short));
             focusView = mUsernameView;
             cancel = true;
         }
         else if (username.length() < 4) {
-            mUsernameView.setError("Username should be shorter than 3 characters");
+            mUsernameView.setError(getString(R.string.error_username_long));
             focusView = mUsernameView;
             cancel = true;
         }
         else if (username.contains(" ")) {
-            mUsernameView.setError("Username should contain no spaces");
+            mUsernameView.setError(getString(R.string.error_username_space));
             focusView = mUsernameView;
             cancel = true;
         }

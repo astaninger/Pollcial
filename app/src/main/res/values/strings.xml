@@ -7,9 +7,14 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_invalid_password">The password should be more than 7 characters</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_username_short">Username should be shorter than 16 characters</string>
+    <string name="error_username_long">Username should be longer than 3 characters</string>
+    <string name="error_username_space">Username should contain no spaces</string>
+    <string name="error_password_match">Passwords don\'t match</string>
+
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
