@@ -214,8 +214,7 @@ public class PollResultActivity extends AppCompatActivity {
 
         View currView = this.findViewById(android.R.id.content);
         Intent trigerIntent = getIntent(); // get the last Intent that triger this current Intent
-        // get all needed information about poll from trigerIntent
-        //TODO: SHOULD DISPLAY NUM VOTED ON POLL
+        // get all needed information about poll from trigerIntent\
         String currPollID = trigerIntent.getStringExtra("currPollID");
 
         if (id == R.id.action_sharing) {

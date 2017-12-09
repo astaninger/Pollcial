@@ -96,7 +96,6 @@ public class ViewPollActivity extends AppCompatActivity {
 
                 int choiceID = selectionGroup.getCheckedRadioButtonId();
                 RadioButton selectedButton = findViewById(choiceID);
-                //final String selectedtext = selectedButton.getText().toString();
 
                 mFirebaseAuth = FirebaseAuth.getInstance();
                 mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -193,7 +192,6 @@ public class ViewPollActivity extends AppCompatActivity {
         View currView = this.findViewById(android.R.id.content);
         Intent trigerIntent = getIntent(); // get the last Intent that triger this current Intent
         // get all needed information about poll from trigerIntent
-        //TODO: SHOULD DISPLAY NUM VOTED ON POLL
         String currPollID = trigerIntent.getStringExtra("currPollID");
 
         if (id == R.id.action_sharing) {

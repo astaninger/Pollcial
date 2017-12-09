@@ -88,7 +88,6 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        //populateAutoComplete();
 
         mPasswordReenterView = (EditText) findViewById(R.id.password_reenter);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -289,9 +288,6 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Check blocked for testing
-
-        //TODO: not sure what is considered a valid email.
         
         if(email.length() < 5) {
             return false;
@@ -303,14 +299,14 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
             return false;
         }
 
-        return true; //email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
         if (password.length() < 8) {
             return false;
         }
-        return true; //password.length() > 8;
+        return true;
     }
 
 
@@ -420,7 +416,6 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
             try {
                 // Simulate network access.
@@ -437,7 +432,6 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
                 }
             }
 
-            // TODO: register the new account here.
             return true;
         }
 

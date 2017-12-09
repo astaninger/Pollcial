@@ -144,7 +144,6 @@ public class WelcomPageActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //WelcomPageActivity.this.setContentView(R.layout.activity_login);
                 startActivity(new Intent(WelcomPageActivity.this, LoginActivity.class));
                 finish();
             }
@@ -167,11 +166,7 @@ public class WelcomPageActivity extends AppCompatActivity {
     }
 
     private void toggle() {
-        //if (mVisible) {
-        //    hide();
-        //} else {
             show();
-        //}
     }
 
     private void hide() {

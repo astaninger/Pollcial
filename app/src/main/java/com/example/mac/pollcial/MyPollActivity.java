@@ -276,12 +276,6 @@ public class MyPollActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_my_poll) {
 
-            //do nothing
-
-        /*} else if (id == R.id.nav_setting) {
-
-            //render setting activity
-            startActivity(new Intent(MyPollActivity.this, SettingsActivity.class)); */
 
         } else if (id == R.id.nav_logout) {
 

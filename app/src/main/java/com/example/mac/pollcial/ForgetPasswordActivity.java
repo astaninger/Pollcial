@@ -89,7 +89,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                         displaySuccess.show();
 
                                         // go back to login page
-                                        //startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
                                         finish();
                                     } else {
                                         Log.e("sendResetEmail", "Email not found");

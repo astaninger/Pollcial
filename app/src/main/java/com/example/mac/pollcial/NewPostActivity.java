@@ -78,16 +78,6 @@ public class NewPostActivity extends AppCompatActivity {
         // Initialize Firebase Database
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
-
-        //TODO: switch
-        //btnCancel = (Button)findViewById(R.id.cancelButton);
-        /*btnCancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(NewPostActivity.this, DiscoverActivity.class));
-            }
-        });*/
     }
 
     private boolean validatePollInfo() {
@@ -125,7 +115,6 @@ public class NewPostActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        //startActivity(new Intent(NewPostActivity.this, DiscoverActivity.class));
         finish();
 
         return true;
@@ -151,7 +140,6 @@ public class NewPostActivity extends AppCompatActivity {
 
 
                 //poll object. Not sure how to get username, useremail, time, and pollID.
-                // TODO: add Firebase authentication to this file so we can get user
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 uid = user.getUid();
                 username = (user.getDisplayName() == null) ? "Guest" : user.getDisplayName();

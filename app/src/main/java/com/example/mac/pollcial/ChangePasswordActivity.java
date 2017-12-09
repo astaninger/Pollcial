@@ -114,7 +114,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                                 displaySuccess.show();
 
                                                 // go back to previous page
-                                                //startActivity(new Intent(ChangePasswordActivity.this, ProfileActivity.class));
                                                 finish();
                                             }
                                             else {
@@ -186,7 +185,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if (password.length() < 8) {
             return false;
         }
-        return true; //password.length() > 8;
+        return true;
     }
 
     //this block clear focus when touch somewhere else
