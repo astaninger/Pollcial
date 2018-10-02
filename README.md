@@ -1,4 +1,4 @@
-# Pollcial <img src='https://github.com/astaninger/Pollcial/blob/master/app/src/main/ic_launcher-web.png' alt="Pollcial" height=100 width=150>
+# Pollcial <img src='https://github.com/astaninger/Pollcial/blob/master/app/src/main/ic_launcher-web.png' alt="Pollcial" height=50 width=50>
 The social polling app
 by
 Team Just Every Reasonable Recommendations’ Yours,
