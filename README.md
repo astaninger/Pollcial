@@ -1,4 +1,4 @@
-# Pollcial ![alt text](https://github.com/astaninger/Pollcial/blob/master/app/src/main/ic_launcher-web.png "Pollcial")
+# Pollcial ![alt text](https://github.com/astaninger/Pollcial/blob/master/app/src/main/ic_launcher-web.png =100x20 "Pollcial")
 The social polling app
 by
 Team Just Every Reasonable Recommendations’ Yours,
