@@ -1,4 +1,4 @@
-# Pollcial
+# Pollcial ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Pollcial")
 The social polling app
 by
 Team Just Every Reasonable Recommendations’ Yours,
