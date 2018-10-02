@@ -1,4 +1,4 @@
-# Pollcial ![alt text](https://github.com/astaninger/Pollcial/blob/master/app/src/main/ic_launcher-web.png "Pollcial" =100x20)
+# Pollcial <img src='https://github.com/astaninger/Pollcial/blob/master/app/src/main/ic_launcher-web.png' alt="Pollcial" height=100 width=150>
 The social polling app
 by
 Team Just Every Reasonable Recommendations’ Yours,
